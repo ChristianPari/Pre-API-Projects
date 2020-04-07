@@ -73,8 +73,6 @@ function modifyDate() {
             else if (calendar.day > 29 && (calendar.year % 4 == 0))
                 calendar.day = 1
 
-
-
         }
 
         if (calendar.shortMonths.includes(calendar.month)) {
@@ -98,6 +96,7 @@ function modifyDate() {
         }
 
     }
+
     if (buttonID == `prevDay`) {
 
 
