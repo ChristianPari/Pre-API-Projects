@@ -17,21 +17,14 @@
 
 //global variables
 
-//! change to change each day at some point using `new Date()`
-// let currentDate = {
-
-//     year: 2020,
-//     month: 4,
-//     day: 6
-
-// };
-
 let currentDate = new Date();
-let dmy = {
+let calendar = {
 
     day: currentDate.getDate(),
     month: currentDate.getMonth() + 1,
-    year: currentDate.getFullYear()
+    year: currentDate.getFullYear(),
+    shortMonths: [4, 6, 9, 11],
+    regMonths: [1, 3, 5, 7, 8, 12]
 
 };
 
@@ -47,7 +40,7 @@ function createInitalElms() {
     //create the head elm
     // & set the properties
     //! createHeading({ text: currentDate, id: 'dateHead' })
-    createHeading({ text: `${dmy.day} ${dmy.month} ${dmy.year}`, id: `dateHead`, size: 1 })
+    createHeading({ text: `${calendar.day} ${calendar.month} ${calendar.year}`, id: `dateHead`, size: 1 })
 
     //create all the needed button elms
 
@@ -70,48 +63,37 @@ function modifyDate() {
 
     if (buttonID == `nextDay`) {
 
-        if (dmy.month == 2) {
+        if (calendar.month == 2) {
 
-            dmy.day++;
+            calendar.day++;
 
-            if (dmy.day > 28 && (dmy.year % 4 != 0)) {
+            if (calendar.day > 28 && (calendar.year % 4 != 0))
+                calendar.day = 1
 
-                dmy.day = 1
+            else if (calendar.day > 29 && (calendar.year % 4 == 0))
+                calendar.day = 1
 
-            } else
-            if (dmy.day > 29 && (dmy.year % 4 == 0)) {
 
-                dmy.day = 1
-
-            }
 
         }
 
-        if (dmy.month == 4 || dmy.month == 6 || dmy.month == 9 || dmy.month == 11) {
+        if (calendar.shortMonths.includes(calendar.month)) {
 
-            if (dmy.day >= 30) {
+            if (calendar.day >= 30)
+                calendar.day = 1;
 
-                dmy.day = 1;
-
-            } else {
-
-                dmy.day++;
-
-            }
+            else
+                calendar.day++;
 
         }
 
-        if (dmy.month == 1 || dmy.month == 3 || dmy.month == 5 || dmy.month == 7 || dmy.month == 8 || dmy.month == 10 || dmy.month == 12) {
+        if (calendar.regMonths.includes(calendar.month)) {
 
-            if (dmy.day >= 31) {
+            if (calendar.day >= 31)
+                calendar.day = 1
 
-                dmy.day = 1
-
-            } else {
-
-                dmy.day++;
-
-            }
+            else
+                calendar.day++;
 
         }
 
@@ -119,80 +101,64 @@ function modifyDate() {
     if (buttonID == `prevDay`) {
 
 
-        dmy.day--;
+        calendar.day--;
 
-        if (dmy.day < 1 && dmy.month == 2) {
+        if (calendar.day < 1 && calendar.month == 2) {
 
-            if (dmy.year % 4 != 0) {
+            if (calendar.year % 4 != 0)
+                calendar.day = 28
 
-                dmy.day = 28
-
-            } else
-            if (dmy.year % 4 == 0) {
-
-                dmy.day = 29
-
-            }
+            else if (calendar.year % 4 == 0)
+                calendar.day = 29
 
         }
 
-        if (dmy.month == 4 || dmy.month == 6 || dmy.month == 9 || dmy.month == 11) {
+        if (calendar.shortMonths.includes(calendar.month)) {
 
-            if (dmy.day < 1) {
-
-                dmy.day = 30;
-
-            }
+            if (calendar.day < 1)
+                calendar.day = 30;
 
         }
 
-        if (dmy.month == 1 || dmy.month == 3 || dmy.month == 5 || dmy.month == 7 || dmy.month == 8 || dmy.month == 10 || dmy.month == 12) {
+        if (calendar.regMonths.includes(calendar.month)) {
 
-            if (dmy.day < 1) {
-
-                dmy.day = 31
-
-            }
+            if (calendar.day < 1)
+                calendar.day = 31
 
         }
 
     }
+
     if (buttonID == `nextMonth`) {
 
-        dmy.month++
+        calendar.month++
 
-            if (dmy.month > 12) {
-
-                dmy.month = 1
-
-            }
+            if (calendar.month > 12)
+                calendar.month = 1
 
     }
+
     if (buttonID == `prevMonth`) {
 
-        dmy.month--
+        calendar.month--
 
-            if (dmy.month < 1) {
-
-                dmy.month = 12
-
-            }
+            if (calendar.month < 1)
+                calendar.month = 12
 
     }
+
     if (buttonID == `nextYear`) {
 
-        dmy.year++
+        calendar.year++
 
     }
+
     if (buttonID == `prevYear`) {
 
-        dmy.year--
+        calendar.year--
 
-            if (dmy.year < 1) {
-
-                dmy.year = 1
-
-            }
+            if (calendar.year < 1)
+                calendar.year = 1
 
     }
 
