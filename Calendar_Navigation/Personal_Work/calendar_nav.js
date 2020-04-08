@@ -5,13 +5,13 @@
 [*] set my event listeners -> create functions
 
        one function for each button, 
-    [] update the date variable/s, 
-    [] update the heading to reflect the date var
+    [*] update the date variable/s, 
+    [*] update the heading to reflect the date var
 
 
-[] set the heading text to the current date, store the current date in a variable
+[*] set the heading text to the current date, store the current date in a variable
 
-[] track numbers of days in a month, how many month ( year is easiest to deal with)
+[*] track numbers of days in a month, how many month ( year is easiest to deal with)
 
 */
 
@@ -31,7 +31,7 @@ let calendar = {
 createInitalElms()
 
 
-//functions 
+//FUNCTIONS 
 
 //creates elements and puts them on the body
 function createInitalElms() {
@@ -39,7 +39,7 @@ function createInitalElms() {
     //create the head elm
     // & set the properties
     //! create a function that creates a setup for the date display
-    createHeading({ text: displayDate(`-`), id: `dateHead`, size: 1 })
+    createHeading({ text: `${displayDate(`-`)} <small><small><small><small><small>Forrmat: DD-MM-YYYY</small></small></small></small></small>`, id: `dateHead`, size: 1 })
 
     //create all the needed button elms
 
@@ -55,9 +55,6 @@ function createInitalElms() {
 }
 
 //modify the date variable depending on which button was clicked
-//! change to switches instead of ton of if else statements
-//^ have functions for each specific case
-
 function modifyDate() {
 
     let id = this.id,
@@ -65,7 +62,7 @@ function modifyDate() {
         curMonth = calendar.month,
         curYear = calendar.year;
 
-    // check for leap year
+    // check for leap year using leap year function call
     checkLeapYear(curYear);
 
     // preform a change on calendar based on the button pressed
@@ -103,6 +100,8 @@ function modifyDate() {
 
             // call for nextYear
             nextYear(curYear);
+            // added the function call below to make Febuarys day length change accordingly
+            checkLeapYear(curYear + 1); 
 
             break;
 
@@ -110,6 +109,8 @@ function modifyDate() {
 
             // call for prevYear
             prevYear(curYear);
+            // added the function call below to make Febuarys day length change accordingly
+            checkLeapYear(curYear - 1);
 
             break;
 
@@ -117,15 +118,20 @@ function modifyDate() {
 
     // checking for impossible dates
     if (calendar.day > calendar.daysByMonth[calendar.month - 1]) {
+
+        console.log(`it worked`);
         calendar.day = calendar.daysByMonth[calendar.month - 1];
+
     }
 
     if (calendar.year <= 1) {
+
         calendar.year = 1;
+        
     }
 
     // update the client/frontend display
-    document.getElementById(`dateHead`).innerHTML = displayDate(`-`);
+    document.getElementById(`dateHead`).innerHTML = `${displayDate(`-`)} <small><small><small><small><small>Forrmat: DD-MM-YYYY</small></small></small></small></small>`;
     //^ completely overwriting the heading that displays the date text
 
 }
@@ -168,6 +174,10 @@ function nextDay(curDay, curMonth) {
         calendar.day = 1;
         calendar.month = 1;
         calendar.year++;
+
+    } else {
+
+        console.log(`Something went wrong, check code`);
 
     }
 
@@ -259,6 +269,8 @@ function nextYear(curYear) {
 }
 
 function prevYear(curYear) {
+    // check for:
+    //? is it year 1?
 
     if (curYear == 1) {
         calendar.year = 1;
@@ -298,8 +310,6 @@ function createHeading(headingObj) {
 
     document.body.appendChild(heading);
 
-    // return heading
-
 };
 
 function createButton(buttonObj) {
@@ -315,7 +325,5 @@ function createButton(buttonObj) {
     button.onclick = buttonObj.onClickFunc != undefined && typeof buttonObj.onClickFunc == `function` ? buttonObj.onClickFunc : `>> No function <<`;
 
     document.body.appendChild(button);
-
-    // return button
 
 };
