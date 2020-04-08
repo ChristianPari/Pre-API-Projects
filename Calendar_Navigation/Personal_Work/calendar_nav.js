@@ -39,8 +39,8 @@ function createInitalElms() {
 
     //create the head elm
     // & set the properties
-    //! createHeading({ text: currentDate, id: 'dateHead' })
-    createHeading({ text: `${calendar.day} ${calendar.month} ${calendar.year}`, id: `dateHead`, size: 1 })
+    //! create a function that creates a setup for the date display
+    createHeading({ text: displayDate(`-`), id: `dateHead`, size: 1 })
 
     //create all the needed button elms
 
@@ -56,6 +56,8 @@ function createInitalElms() {
 }
 
 //modify the date variable depending on which button was clicked
+//! change to switches instead of ton of if else statements
+//^ have functions for each specific case
 
 function modifyDate() {
 
@@ -165,6 +167,23 @@ function modifyDate() {
     createInitalElms()
 
     console.log(buttonID);
+
+}
+
+//FUNCTIONS FOR THE BACKEND
+function displayDate(separator) {
+
+    let sep = separator != undefined ? separator : '/',
+
+        dateObj = calendar,
+
+        day = calendar.day > 9 ? calendar.day : '0' + calendar.day,
+
+        month = calendar.month > 9 ? calendar.month : '0' + calendar.month;
+
+    string = month + sep + day + sep + calendar.year;
+
+    return string
 
 }
 
