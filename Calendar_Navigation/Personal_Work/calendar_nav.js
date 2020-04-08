@@ -130,9 +130,21 @@ function modifyDate() {
 
 }
 
-// SWITCH FUNCTIONS
-//! LOOK INTO MAKING A FUNCTION THAT CAN BE USED FOR THE REPEATING DATA
+function displayDate(separator) {
 
+    let sep = separator != undefined ? separator : '/',
+
+        day = calendar.day > 9 ? calendar.day : '0' + calendar.day,
+
+        month = calendar.month > 9 ? calendar.month : '0' + calendar.month;
+
+    string = day + sep + month + sep + calendar.year;
+
+    return string
+
+}
+
+// SWITCH FUNCTIONS
 function nextDay(curDay, curMonth) {
     // check for:
     //? what month are we in? 
@@ -274,22 +286,6 @@ function checkLeapYear(year) {
 
 }
 
-//FUNCTIONS FOR THE BACKEND
-function displayDate(separator) {
-
-    let sep = separator != undefined ? separator : '/',
-
-        dateObj = calendar,
-
-        day = calendar.day > 9 ? calendar.day : '0' + calendar.day,
-
-        month = calendar.month > 9 ? calendar.month : '0' + calendar.month;
-
-    string = month + sep + day + sep + calendar.year;
-
-    return string
-
-}
 
 //FUNCTIONS THAT CREATE HTML ELEMENTS
 function createHeading(headingObj) {
