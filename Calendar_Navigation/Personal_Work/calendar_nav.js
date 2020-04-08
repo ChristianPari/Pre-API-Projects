@@ -9,13 +9,14 @@
 // GLOBAL DATA / VARIABLES
 let calendarData = {
 
-    years: 2100,
+    years: 2030,
     months: 12,
-    daysByMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    monthsObj: [{ 1: 31 }, { 2: 28 }, { 3: 31 }, { 4: 30 }, { 5: 31 }, { 6: 30 }, { 7: 31 }, { 8: 31 }, { 9: 30 }, { 10: 31 }, { 11: 30 }, { 12: 31 }]
+
 
 }
 
-
+// FUNCTION CALLS TO DISPLAY
 intialElms();
 
 // CREATE HTML ELEMENTS
@@ -25,21 +26,141 @@ function intialElms() {
     let dateDisplay = createHeading({ text: `No date selected`, id: `dateHead`, size: 1 });
 
     // CREATE SELECTS
-    let yearSelect = createSelect({ id: `yearSelect`, class: `calendarSelects`, defOp: `Select A Year`, defOpID: `yearDef`, onChangeFunc: modifyData }),
-        monthSelect = createSelect({ id: `monthSelect`, class: `calendarSelects`, defOp: `Select A Month`, defOpID: `monthDef`, onChangeFunc: modifyData }),
-        daySelect = createSelect({ id: `daySelect`, class: `calendarSelects`, defOp: `Select A Day`, defOpID: `dayDef`, onChangeFunc: modifyData });
+    let yearSelect = createSelect({ id: `yearSelect`, class: `calendarSelects`, defOp: `Select A Year`, defOpID: `yearDef`, onChangeFunc: modifyData });
+    // let monthSelect = createSelect({ id: `monthSelect`, class: `calendarSelects`, defOp: `Select A Month`, defOpID: `monthDef`, onChangeFunc: modifyData });
+    // let daySelect = createSelect({ id: `daySelect`, class: `calendarSelects`, defOp: `Select A Day`, defOpID: `dayDef`, onChangeFunc: modifyData });
 
     document.body.appendChild(dateDisplay);
     document.body.appendChild(yearSelect);
-    document.body.appendChild(monthSelect);
-    document.body.appendChild(daySelect);
+    // document.body.appendChild(monthSelect);
+    // document.body.appendChild(daySelect);
+
+    yearSelectOptions();
 
 }
 
 // FUNCTIONS TO UPDATE THE PROGRAM
+
+function yearSelectOptions() {
+
+    let a = calendarData.years;
+    while (a >= 1) {
+
+        let option = document.createElement(`option`);
+
+        option.id = `Year${a}ID`;
+
+        option.innerHTML = a;
+
+        option.value = a;
+
+        document.getElementById(`yearSelect`).appendChild(option);
+
+        a--;
+
+    }
+
+}
+
+function monthSelectOptionsByNum(year) {
+
+    if (year % 4 == 0 || (year % 100 != 0 && year % 400 == 0)) {
+
+        calendarData.monthsObj[1][2] = 29;
+        console.log(`leap`);
+
+
+    } else {
+
+        calendarData.monthsObj[1][2] = 28;
+        console.log(`not leap`);
+
+
+    }
+
+    let a = 1;
+    while (a <= calendarData.months) {
+
+        let option = document.createElement(`option`);
+
+        option.id = a;
+
+        option.innerHTML = a;
+
+        option.value = Object.keys(calendarData.monthsObj[a - 1])[0];
+
+        document.getElementById(`monthSelect`).appendChild(option);
+
+        a++;
+
+    }
+
+}
+
+function daysSelectOptions(month) {
+
+    let daysInMonth = calendarData.monthsObj[month - 1][month];
+    console.log(daysInMonth);
+
+    let a = 1;
+    while (a <= daysInMonth) {
+
+        let option = document.createElement(`option`);
+
+        option.id = `Day${a}ID`;
+
+        option.innerHTML = a;
+
+        option.value = `Day${a}`;
+
+        document.getElementById(`daySelect`).appendChild(option);
+
+        a++;
+
+    }
+
+}
+
 function modifyData() {
 
-    console.log(this);
+    console.log(this.id);
+
+    let data = this;
+
+    if (data.id == `yearSelect`) {
+
+        let monthSelect = createSelect({ id: `monthSelect`, class: `calendarSelects`, defOp: `Select A Month`, defOpID: `monthDef`, onChangeFunc: modifyData });
+
+        // if (document.getElementById(`monthSelect`) != null) {
+
+        //     document.body.removeChild(`monthSelect`);
+
+        //     if (document.getElementById(`daySelect`) != null) {
+
+        //         document.body.removeChild(`monthSelect`);
+
+        //     }
+
+        // }
+
+        document.body.appendChild(monthSelect);
+        monthSelectOptionsByNum(data.value);
+
+    } else if (data.id == `monthSelect`) {
+
+        let daySelect = createSelect({ id: `daySelect`, class: `calendarSelects`, defOp: `Select A Day`, defOpID: `dayDef`, onChangeFunc: modifyData });
+
+        // if (document.getElementById(`daySelect`) != null) {
+
+        //     document.body.removeChild(`daySelect`);
+
+        // }
+
+        document.body.appendChild(daySelect);
+        let month = data.value;
+        daysSelectOptions(month);
+
+    }
 
 }
 
