@@ -23,8 +23,7 @@ let calendar = {
     day: currentDate.getDate(),
     month: currentDate.getMonth() + 1,
     year: currentDate.getFullYear(),
-    shortMonths: [4, 6, 9, 11],
-    regMonths: [1, 3, 5, 7, 8, 12]
+    daysByMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 };
 
@@ -61,112 +60,217 @@ function createInitalElms() {
 
 function modifyDate() {
 
-    let buttonID = this.id;
+    let id = this.id,
+        curDay = calendar.day,
+        curMonth = calendar.month,
+        curYear = calendar.year;
 
-    if (buttonID == `nextDay`) {
+    // check for leap year
+    checkLeapYear(curYear);
 
-        if (calendar.month == 2) {
+    // preform a change on calendar based on the button pressed
+    // creating functions for each specific case
+    switch (id) {
+        case `nextDay`:
 
-            calendar.day++;
+            // call for nextDay function
+            nextDay(curDay, curMonth);
 
-            if (calendar.day > 28 && (calendar.year % 4 != 0))
-                calendar.day = 1
+            break;
 
-            else if (calendar.day > 29 && (calendar.year % 4 == 0))
-                calendar.day = 1
+        case `prevDay`:
 
-        }
+            // call for prevDay function
+            prevDay(curDay, curMonth);
 
-        if (calendar.shortMonths.includes(calendar.month)) {
+            break;
 
-            if (calendar.day >= 30)
-                calendar.day = 1;
+        case `nextMonth`:
 
-            else
-                calendar.day++;
+            // call for nextMonth
+            nextMonth(curMonth);
 
-        }
+            break;
 
-        if (calendar.regMonths.includes(calendar.month)) {
+        case `prevMonth`:
 
-            if (calendar.day >= 31)
-                calendar.day = 1
+            // call for prevMonth
+            prevMonth(curMonth);
 
-            else
-                calendar.day++;
+            break;
 
-        }
+        case `nextYear`:
+
+            // call for nextYear
+            nextYear(curYear);
+
+            break;
+
+        case `prevYear`:
+
+            // call for prevYear
+            prevYear(curYear);
+
+            break;
 
     }
 
-    if (buttonID == `prevDay`) {
+    // checking for impossible dates
+    if (calendar.day > calendar.daysByMonth[calendar.month - 1]) {
+        calendar.day = calendar.daysByMonth[calendar.month - 1];
+    }
 
+    if (calendar.year <= 1) {
+        calendar.year = 1;
+    }
+
+    // update the client/frontend display
+    document.getElementById(`dateHead`).innerHTML = displayDate(`-`);
+    //^ completely overwriting the heading that displays the date text
+
+}
+
+// SWITCH FUNCTIONS
+//! LOOK INTO MAKING A FUNCTION THAT CAN BE USED FOR THE REPEATING DATA
+
+function nextDay(curDay, curMonth) {
+    // check for:
+    //? what month are we in? 
+    //? what is the last day of the month? 
+    //? are we on the last day of the month? if so, continue on to the next month
+    //? is it december? b/c then we have to continue into the next year
+    //? if not on last day then continue increasing through the month
+
+    // need to minus 1 to account for the index of the months not starting at 1 but instead starting at 0; Jan = 0 not 1
+    if (curDay < calendar.daysByMonth[curMonth - 1]) {
+
+        calendar.day++
+
+    } else if (curDay == calendar.daysByMonth[curMonth - 1] && curMonth != 12) { // at end of the month, but not the end of the year)
+
+        calendar.day = 1;
+        calendar.month++;
+
+    } else if (curDay == calendar.daysByMonth[curMonth - 1] && curMonth == 12) { // at end of the month of december/ end of year
+
+        calendar.day = 1;
+        calendar.month = 1;
+        calendar.year++;
+
+    }
+
+}
+
+function prevDay(curDay, curMonth) {
+    // check for:
+    //? what month are we in?
+    //? are we on the first day of the month? if so, continue on to the next month
+    //? is it january? b/c then we have to continue into the previous year
+    //? if not on last day then continue decreasing through the month
+
+    if (curDay > 1) {
 
         calendar.day--;
 
-        if (calendar.day < 1 && calendar.month == 2) {
+    } else if (curDay == 1 && curMonth != 1) { // at beginning of the month, but not the end of the year)
 
-            if (calendar.year % 4 != 0)
-                calendar.day = 28
+        calendar.day = calendar.daysByMonth[curMonth - 2];
+        calendar.month--;
 
-            else if (calendar.year % 4 == 0)
-                calendar.day = 29
+    } else if (curDay == 1 && curMonth == 1) { // at beginning of the month of december/ end of year
 
-        }
+        calendar.day = 31;
+        calendar.month = 12;
+        calendar.year--;
 
-        if (calendar.shortMonths.includes(calendar.month)) {
+    } else {
 
-            if (calendar.day < 1)
-                calendar.day = 30;
-
-        }
-
-        if (calendar.regMonths.includes(calendar.month)) {
-
-            if (calendar.day < 1)
-                calendar.day = 31
-
-        }
+        console.log(`Something went wrong, check code`);
 
     }
 
-    if (buttonID == `nextMonth`) {
+}
 
-        calendar.month++
+function nextMonth(curMonth) {
+    // check for:
+    //? is it deecember?
+    //? otherwise just continue through
 
-            if (calendar.month > 12)
-                calendar.month = 1
+    if (curMonth < 12) {
 
-    }
+        calendar.month++;
 
-    if (buttonID == `prevMonth`) {
+    } else if (curMonth == 12) {
 
-        calendar.month--
+        calendar.month = 1;
+        calendar.year++;
 
-            if (calendar.month < 1)
-                calendar.month = 12
+    } else {
 
-    }
-
-    if (buttonID == `nextYear`) {
-
-        calendar.year++
+        console.log(`Something went wrong, check code`);
 
     }
 
-    if (buttonID == `prevYear`) {
+}
 
-        calendar.year--
+function prevMonth(curMonth) {
+    // check for:
+    //? is it january?
+    //? otherwise just continue through
+    //? dont want to cause `fake dates` like Feb 31st
 
-            if (calendar.year < 1)
-                calendar.year = 1
+    if (curMonth > 1) {
+
+        calendar.month--;
+
+    } else if (curMonth == 1) {
+
+        calendar.month = 12;
+        calendar.year--;
+
+    } else {
+
+        console.log(`Something went wrong, check code`);
 
     }
 
-    document.body.innerHTML = ``;
-    createInitalElms()
+}
 
-    console.log(buttonID);
+function nextYear(curYear) {
+
+    if (curYear > 0) {
+
+        calendar.year++;
+
+    }
+
+}
+
+function prevYear(curYear) {
+
+    if (curYear == 1) {
+        calendar.year = 1;
+    } else {
+
+        calendar.year--;
+
+    }
+
+}
+
+
+// easiest to check on the onlick function so that you dont have to repeat code or have more intense logic
+function checkLeapYear(year) {
+
+    if (year % 4 == 0 || (year % 100 != 0 && year % 400 == 0)) {
+
+        calendar.daysByMonth[1] = 29;
+
+    } else {
+
+        calendar.daysByMonth[1] = 28;
+
+    }
 
 }
 
