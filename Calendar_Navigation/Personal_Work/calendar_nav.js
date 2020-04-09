@@ -12,7 +12,7 @@ let calendarData = {
     years: 2020,
     months: 12,
     monthsObj: [{ 1: 31 }, { 2: 28 }, { 3: 31 }, { 4: 30 }, { 5: 31 }, { 6: 30 }, { 7: 31 }, { 8: 31 }, { 9: 30 }, { 10: 31 }, { 11: 30 }, { 12: 31 }],
-    dateDisplay: []
+    dateDisplay: [`day`, `month`, `year`]
         //^ USED TO DISPLAY THE DATE ONCE THE USER HAS SELECTED YEAR MONTH AND DAY; FORMAT: DD/MM/YYYY
 
 }
@@ -58,7 +58,7 @@ function intialElms() {
 // FUNCTIONS TO UPDATE THE PROGRAM
 function dateDisplay() {
 
-    let string = `${calendarData.dateDisplay[2]}/${calendarData.dateDisplay[1]}/${calendarData.dateDisplay[0]}`;
+    let string = `${calendarData.dateDisplay[0]}/${calendarData.dateDisplay[1]}/${calendarData.dateDisplay[2]}<br>`;
     return string
 
 }
@@ -165,7 +165,7 @@ function modifyData() {
         document.body.appendChild(monthSelect);
         monthSelectOptionsByNum(data.value);
         document.getElementById(`yearSelect`).style.display = `none`;
-        calendarData.dateDisplay.push(data.value);
+        calendarData.dateDisplay[2] = data.value;
         console.log(calendarData.dateDisplay);
 
     } else if (data.id == `monthSelect`) {
@@ -177,11 +177,11 @@ function modifyData() {
         daysSelectOptions(month);
         document.getElementById(`monthSelect`).style.display = `none`;
         if (data.value < 10) {
-            let newVal = `0${data.value}`;
-            calendarData.dateDisplay.push(newVal);
+            let newVal = `0${month}`;
+            calendarData.dateDisplay[1] = newVal;
             console.log(calendarData.dateDisplay);
         } else {
-            calendarData.dateDisplay.push(data.value);
+            calendarData.dateDisplay[1] = month;
             console.log(calendarData.dateDisplay);
         }
 
@@ -190,10 +190,10 @@ function modifyData() {
         let restartButton = createButton({ id: `restartButton`, text: `Click to select a new date!`, onClickFunc: intialElms });
         if (data.value < 10) {
             let newVal = `0${data.value}`;
-            calendarData.dateDisplay.push(newVal);
+            calendarData.dateDisplay[0] = newVal;
             console.log(calendarData.dateDisplay);
         } else {
-            calendarData.dateDisplay.push(data.value);
+            calendarData.dateDisplay[0] = data.value;
             console.log(calendarData.dateDisplay);
         }
 
