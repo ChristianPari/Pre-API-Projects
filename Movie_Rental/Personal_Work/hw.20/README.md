@@ -1,0 +1,3 @@
+Version 2: This program allows the user to scroll from the top to the bottom of the webpage to view movies. The sidebar is used to select a movie to rent or return. Once selected the movie the user selected is moved to the opposite location. Played around more with CSS, provided lots more animation to the DOM.
+
+![Movie Rental v2](https://user-images.githubusercontent.com/62902638/78931370-dc0eb300-7a73-11ea-9c4f-8f3b29240c69.gif)
