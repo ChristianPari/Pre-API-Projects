@@ -40,7 +40,7 @@ function intialElms() {
 
         document.body.innerHTML = ``;
 
-        // HEADING TO DISPLAY DATE INFO
+        // HEADING TO DISPLAY DATE INFO 
         let dateDisplay = createHeading({ text: `No date selected`, id: `dateHead`, size: 1 });
         dateDisplay.style.display = `none`;
 
