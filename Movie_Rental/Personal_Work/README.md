@@ -1,0 +1,1 @@
+This folder contains various versions of this project that I submitted. Plan to continue making new and improved versions overtime.
