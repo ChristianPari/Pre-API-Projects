@@ -11,8 +11,9 @@ let calendarData = {
 
     years: 2020,
     months: 12,
-    monthsObj: [{ 1: 31 }, { 2: 28 }, { 3: 31 }, { 4: 30 }, { 5: 31 }, { 6: 30 }, { 7: 31 }, { 8: 31 }, { 9: 30 }, { 10: 31 }, { 11: 30 }, { 12: 31 }]
-
+    monthsObj: [{ 1: 31 }, { 2: 28 }, { 3: 31 }, { 4: 30 }, { 5: 31 }, { 6: 30 }, { 7: 31 }, { 8: 31 }, { 9: 30 }, { 10: 31 }, { 11: 30 }, { 12: 31 }],
+    dateDisplay: []
+        //^ USED TO DISPLAY THE DATE ONCE THE USER HAS SELECTED YEAR MONTH AND DAY; FORMAT: DD/MM/YYYY
 
 }
 
@@ -27,6 +28,7 @@ function intialElms() {
         // HEADING TO DISPLAY DATE INFO
         let dateDisplay = createHeading({ text: `No date selected`, id: `dateHead`, size: 1 });
         dateDisplay.style.display = `none`;
+        //^ SETTING DISPLAY TO NONE SO AND WILL MAKE IT REAPPEAR ONCE PROGRAM IS FINISHED RUNNING; WILL DISPLAY DATE
 
         // CREATE BUTTON
         let beginButton = createButton({ id: `beginButton`, text: `Click to select a date!`, onClickFunc: showSelects });
@@ -56,14 +58,8 @@ function intialElms() {
 // FUNCTIONS TO UPDATE THE PROGRAM
 function dateDisplay() {
 
-    let regex = new RegExp(/\d{4}\d{2}\d{2}/);
-
-    if (regex.test(document.getElementById(`dateHead`).innerHTML)) {
-
-        document.getElementById(`dateHead`).innerHTML = document.getElementById(`dateHead`).innerHTML.replace(/\d{4}-\d{2}-\d{2}/)
-
-    }
-
+    let string = `${calendarData.dateDisplay[2]}/${calendarData.dateDisplay[1]}/${calendarData.dateDisplay[0]}`;
+    return string
 
 }
 
@@ -118,7 +114,7 @@ function monthSelectOptionsByNum(year) {
 
         let option = document.createElement(`option`);
 
-        option.id = a;
+        option.id = `Month${a}ID`;
 
         option.innerHTML = a;
 
@@ -146,7 +142,7 @@ function daysSelectOptions(month) {
 
         option.innerHTML = a;
 
-        option.value = `Day${a}`;
+        option.value = a;
 
         document.getElementById(`daySelect`).appendChild(option);
 
@@ -169,7 +165,8 @@ function modifyData() {
         document.body.appendChild(monthSelect);
         monthSelectOptionsByNum(data.value);
         document.getElementById(`yearSelect`).style.display = `none`;
-        document.getElementById(`dateHead`).innerHTML = data.value;
+        calendarData.dateDisplay.push(data.value);
+        console.log(calendarData.dateDisplay);
 
     } else if (data.id == `monthSelect`) {
 
@@ -180,17 +177,27 @@ function modifyData() {
         daysSelectOptions(month);
         document.getElementById(`monthSelect`).style.display = `none`;
         if (data.value < 10) {
-            newVal = `/0${data.value}`;
+            let newVal = `0${data.value}`;
+            calendarData.dateDisplay.push(newVal);
+            console.log(calendarData.dateDisplay);
+        } else {
+            calendarData.dateDisplay.push(data.value);
+            console.log(calendarData.dateDisplay);
         }
-        document.getElementById(`dateHead`).innerHTML += newVal;
 
     } else if (data.id == `daySelect`) {
 
         let restartButton = createButton({ id: `restartButton`, text: `Click to select a new date!`, onClickFunc: intialElms });
         if (data.value < 10) {
-            newVal = `0${data.value}`;
+            let newVal = `0${data.value}`;
+            calendarData.dateDisplay.push(newVal);
+            console.log(calendarData.dateDisplay);
+        } else {
+            calendarData.dateDisplay.push(data.value);
+            console.log(calendarData.dateDisplay);
         }
-        document.getElementById(`dateHead`).innerHTML += newVal;
+
+        document.getElementById(`dateHead`).innerHTML = dateDisplay();
         document.getElementById(`daySelect`).style.display = `none`;
         document.body.appendChild(restartButton);
         document.getElementById(`dateHead`).style.display = `initial`;
