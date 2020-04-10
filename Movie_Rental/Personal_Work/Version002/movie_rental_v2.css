@@ -1,0 +1,305 @@
+body {
+    background-image: url(images/marvel_comic_strip.jpg);
+}
+
+#mainHeadingDiv {
+    /* position: sticky; */
+    top: 0;
+}
+
+#mainHeading {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    background-color: white;
+    border-style: double;
+    border-width: 10px;
+    border-radius: 15px;
+    font-size: 45px;
+}
+
+#mainHeading:hover {
+    text-align: center;
+    border-color: rgb(0, 0, 0);
+    background-color: rgb(231, 218, 37);
+    color: rgb(0, 0, 0);
+    border-style: double;
+    border-width: 10px;
+    border-radius: 15px;
+    font-size: 45px;
+}
+
+#mainDiv {
+    display: flex;
+}
+
+#sidebar {
+    position: sticky;
+    top: 80px;
+    margin: 5px;
+    background-color: white;
+    border-style: double;
+    border-radius: 10px;
+    border-width: 10px;
+    align-content: center;
+    max-block-size: 300px;
+    text-align: center;
+}
+
+#buttonDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+#rentRandomButton,
+#returnRandomButton {
+    border-radius: 7px;
+    border-style: solid;
+    border-color: black;
+    background-color: white;
+    border-width: 3px;
+    height: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+#rentRandomButton:hover,
+#returnRandomButton:hover {
+    border-radius: 7px;
+    border-style: solid;
+    border-color: yellow;
+    background-color: red;
+    color: white;
+    border-width: 3px;
+}
+
+#sidebarAvailable,
+#sidebarUnavailable {
+    text-align: center;
+    font-size: 17px;
+}
+
+.movieSelects {
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 3px;
+    border-color: black;
+    width: fit-content;
+}
+
+.movieContainers {
+    flex: 3;
+    text-align: center;
+    border-radius: 20px;
+}
+
+#availableHeading,
+#rentedHeading {
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    background-color: white;
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+}
+
+#availableHeading:hover,
+#rentedHeading:hover {
+    border-style: solid;
+    border-color: yellow;
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+    font-size: 40px;
+}
+
+#allAvailable,
+#allRented {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.movieDiv {
+    margin: 2%;
+    text-align: center;
+    width: 300px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.movieDiv #BlaTitle:hover {
+    border-style: solid;
+    border-color: #664EAE;
+    background-color: #C4a8ff;
+    color: #1A0554;
+    border-radius: 8px;
+    transform: scale(1.25);
+}
+
+.movieDiv #DocTitle:hover {
+    border-style: solid;
+    border-color: rgb(187, 145, 8);
+    background-color: #850000;
+    color: #008DC8;
+    border-radius: 8px;
+    transform: scale(1.25);
+}
+
+.movieDiv #GuaTitle:hover {
+    border-style: solid;
+    border-color: #FDFAC3;
+    background-color: #F8B54C;
+    color: #13286B;
+    border-radius: 8px;
+    transform: scale(1.25);
+}
+
+.movieDiv #IroTitle:hover {
+    border-style: solid;
+    border-color: #B97D10;
+    background-color: #FBCA03;
+    color: #6A0C0B;
+    border-radius: 8px;
+    transform: scale(1.25);
+}
+
+.movieDiv #SpiTitle:hover {
+    border-style: solid;
+    border-color: #B11313;
+    background-color: #2B3784;
+    color: #447BBE;
+    border-radius: 8px;
+    transform: scale(1.25);
+}
+
+.movieDiv #TheTitle:hover {
+    border-style: solid;
+    border-color: #4D8AB5;
+    background-color: #951E22;
+    color: #00851b;
+    border-radius: 8px;
+    transform: scale(1.25);
+}
+
+.movieDiv #CapTitle:hover {
+    border-style: solid;
+    border-color: #EC2004;
+    background-color: #FFFFFF;
+    color: #1849CA;
+    border-radius: 8px;
+    transform: scale(1.25);
+}
+
+.movieDiv #ThoTitle:hover {
+    border-style: solid;
+    border-color: #FEA724;
+    background-color: #AC1C11;
+    color: #0ea800;
+    border-radius: 8px;
+    transform: scale(1.25);
+}
+
+.movieDiv h2,
+h4 {
+    border-style: solid;
+    border-color: black;
+    background-color: white;
+    color: rgb(0, 0, 0);
+    border-radius: 8px;
+    transition: transform 0.5s;
+}
+
+.marvel {
+    border-color: black;
+    border-style: double;
+    background-color: white;
+    border-radius: 10px;
+    border-width: 10px;
+    height: 350px;
+    width: 275px;
+    transition: transform 0.5s;
+}
+
+.description:hover .marvel {
+    border-color: black;
+    border-style: double;
+    background-color: white;
+    border-radius: 10px;
+    border-width: 10px;
+    filter: blur(3px);
+    transform: scale(1.1);
+}
+
+.description p {
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.521);
+    border-radius: 10px;
+    border-width: 3px;
+    color: black;
+    font-size: 15px;
+    transition: transform 0.5s;
+    position: absolute;
+    top: 35%;
+    left: 20%;
+    right: 20%;
+    opacity: 0;
+}
+
+.description:hover p {
+    transform: scale(1.5);
+    opacity: 1;
+}
+
+.rentChoiceButton {
+    position: absolute;
+    top: 80%;
+    left: 115px;
+    border-radius: 7px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    background-color: white;
+    font-weight: bold;
+    transition: transform 0.5s;
+    opacity: 0;
+}
+
+.description:hover .rentChoiceButton {
+    transform: scale(1.5);
+    opacity: 1;
+}
+
+.rentChoiceButton:hover {
+    border-radius: 7px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: yellow;
+    background-color: red;
+}
+
+.description a {
+    position: absolute;
+    top: 90%;
+    left: 70px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 8px;
+    background-color: white;
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    font-weight: bold;
+    opacity: 0;
+    transition: transform 0.5s;
+}
+
+.description:hover a {
+    transform: scale(1.3);
+    opacity: 1;
+}
+
+.description a:hover {
+    border-color: yellow;
+    background-color: red;
+}
