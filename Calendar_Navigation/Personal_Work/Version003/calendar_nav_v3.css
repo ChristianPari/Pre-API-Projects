@@ -1,0 +1,33 @@
+body {
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+}
+
+#dateHead {
+    text-align: center;
+    font-size: 150px;
+}
+
+#userDiv {
+    text-align: center;
+}
+
+#userDiv button {
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    background-color: transparent;
+    border: 5px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+#userDiv select {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    background-color: transparent;
+    border: 5px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    cursor: pointer;
+}
