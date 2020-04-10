@@ -1,3 +1,3 @@
-Version 3: This program allows the user to scroll from the left to right of the webpage to view movies in two sections; available and unavailable. The sidebar is used to select a movie to rent or return. Once selected the movie the user selected is moved to the opposite location.
+Version 3: This program allows the user to scroll from the left to right of the webpage to view movies in two sections; available and unavailable. The sidebar is used to select a movie to rent or return. Once selected the movie the user selected is moved to the opposite location. 
 
 ![Movie Rental v3](https://user-images.githubusercontent.com/62902638/78942209-2c434080-7a87-11ea-931b-1a1d1786dbe2.gif)
