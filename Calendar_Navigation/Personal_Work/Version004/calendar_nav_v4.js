@@ -21,7 +21,7 @@ intialElements()
 /* CREATE INITIAL ELEMENTS:
     [*]HEADING TO BODY, 
     [*]2 DIVS TO BODY, 
-    [*]BUTTONS: CHANGE DATE, MAKE A NOTE, REVEAL NOTES
+    [*]BUTTONS: CHANGE DATE, MAKE A NOTE, SHOW NOTES, HIDE NOTES
     [*]SELECTS: YEAR AND MONTH; THIS DATA WONT NEED CHANGING SO CREATE THEM HERE BUT DISPLAY BE SET TO NONE
     [*]BUTTONS TO FIRST DIV
     [*]SELECTS BE APPENDED
@@ -35,10 +35,12 @@ function intialElements() {
     // CREATE DIVS
     let interactive = createDiv({ id: `interactive` }),
         notesDisplay = createDiv({ id: `notesDisplay` });
+    notesDisplay.style.display = `none`;
 
     let changeDate = createButton({ id: `changeDateButton`, text: `Change Date`, class: `buttons`, onClickFunc: changeDateFunc }),
         makeNote = createButton({ id: `makeNoteButton`, text: `Make A Note`, class: `buttons`, onClickFunc: makeNoteFunc }),
-        revealNotes = createButton({ id: `revealNotesButton`, text: `Show Notes`, class: `buttons`, onClickFunc: revealNotesFunc });
+        revealNotes = createButton({ id: `revealNotesButton`, text: `Show Notes`, class: `buttons`, onClickFunc: revealNotesFunc }),
+        hideNotes = createButton({ id: `hideNotesButton`, text: `Hide Notes`, class: `buttons`, onClickFunc: hideNotesFunc });
 
     // CREATE YEAR AND MONTHS SELECTS
     // CREATE A LOOP TO GET `YEAR` SELECT DATA
@@ -64,6 +66,8 @@ function intialElements() {
     monthSelect.style.display = `none`;
     interactive.appendChild(makeNote);
     interactive.appendChild(revealNotes);
+    interactive.appendChild(hideNotes);
+    hideNotes.style.display = `none`;
 
 
 }
@@ -131,7 +135,17 @@ function makeNoteFunc() {
 
 function revealNotesFunc() {
 
+    document.getElementById(`notesDisplay`).style.display = `initial`;
+    document.getElementById(`revealNotesButton`).style.display = `none`;
+    document.getElementById(`hideNotesButton`).style.display = `initial`;
+    
+}
 
+function hideNotesFunc() {
+
+    document.getElementById(`notesDisplay`).style.display = `none`;
+    document.getElementById(`revealNotesButton`).style.display = `initial`;
+    document.getElementById(`hideNotesButton`).style.display = `none`;
 
 }
 
