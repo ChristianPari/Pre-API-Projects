@@ -16,15 +16,16 @@ let dateInfo = {
 let storedData = {};
 
 // FUNCTION CALL(S)
+intialElements()
 
 // FUNCTIONS NEEDED
 /* CREATE INITIAL ELEMENTS:
-    HEADING TO BODY, 
-    2 DIVS TO BODY, 
-    BUTTONS: CHANGE DATE, MAKE A NOTE, REVEAL NOTES
-    SELECTS: YEAR AND MONTH; THIS DATA WONT NEED CHANGING SO CREATE THEM HERE BUT DISPLAY BE SET TO NONE
-    BUTTONS TO FIRST DIV
-    SELECTS BE APPENDED
+    [*]HEADING TO BODY, 
+    [*]2 DIVS TO BODY, 
+    [*]BUTTONS: CHANGE DATE, MAKE A NOTE, REVEAL NOTES
+    [*]SELECTS: YEAR AND MONTH; THIS DATA WONT NEED CHANGING SO CREATE THEM HERE BUT DISPLAY BE SET TO NONE
+    []BUTTONS TO FIRST DIV
+    []SELECTS BE APPENDED
 */
 
 function intialElements() {
@@ -54,14 +55,24 @@ function intialElements() {
     let yearSelect = createSelect({ id: `yearSelect`, class: `calSelects`, defOp: `Select A Year!`, data: yearsArr, onchange: selectYear }),
         monthSelect = createSelect({ id: `monthSelect`, class: `calSelects`, defOp: `Select A Month!`, data: dateInfo.monthsArr, onchange: selectMonth });
 
+    document.body.appendChild(dateDisplay);
+    document.body.appendChild(interactive);
+    document.body.appendChild(notesDisplay);
+    interactive.appendChild(changeDate);
+    interactive.appendChild(yearSelect);
+    yearSelect.style.display = `none`;
+    interactive.appendChild(monthSelect);
+    monthSelect.style.display = `none`;
+    interactive.appendChild(makeNote);
+    interactive.appendChild(revealNotes);
 
 
 }
 
 /* FUNCTIONS FOR BUTTONS ONCLICK:
-    CHANGE DATE: WILL USE THE SELECT ELEMENTS; HIDE OTHER BUTTONS UNTIL DATE IS SELECTED
-    MAKE A NOTE: WILL CREATE A POPUP PROMPT FOR THE USER, THE DATE AND NOTE WILL BE SAVED TOGETHER IN THE SECOND DIV
-    REVEAL NOTES: WILL WORK AS A TOGGLE TO SHOW OR HIDE THE NOTES SECTION; MAKE SCROLLABLE IN CSS ONCE DONE
+    []CHANGE DATE: WILL USE THE SELECT ELEMENTS; HIDE OTHER BUTTONS UNTIL DATE IS SELECTED
+    []MAKE A NOTE: WILL CREATE A POPUP PROMPT FOR THE USER, THE DATE AND NOTE WILL BE SAVED TOGETHER IN THE SECOND DIV
+    []REVEAL NOTES: WILL WORK AS A TOGGLE TO SHOW OR HIDE THE NOTES SECTION; MAKE SCROLLABLE IN CSS ONCE DONE
 */
 
 function changeDateFunc() {}
@@ -74,6 +85,12 @@ function revealNotesFunc() {}
     MONTH, DAY, YEAR
         MAKE FUNCTIONS FOR REPEATED CODE
 */
+
+function selectYear() {}
+
+function selectMonth() {}
+
+function selectDay() {}
 
 // FUNCTIONS TO CREATE HTML ELEMENTS
 function createDiv(divObj) {
