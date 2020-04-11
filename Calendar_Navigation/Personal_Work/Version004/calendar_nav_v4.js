@@ -172,7 +172,6 @@ function checkLeapYear(year) {
 
 function selectYear() {
 
-    console.log(this.value);
     dateInfo.year = this.value;
 
     checkLeapYear(dateInfo.year);
@@ -185,7 +184,6 @@ function selectYear() {
 
 function selectMonth() {
 
-    console.log(this.value);
     dateInfo.month = dateInfo.monthsArr.indexOf(this.value);
 
     this.style.display = `none`;
@@ -208,15 +206,9 @@ function selectMonth() {
 
 function selectDay() {
 
-    console.log(this.value);
     dateInfo.day = this.value;
 
     this.style.display = `none`;
-
-    // ONCE THE DAY IS SELECTED, UPDATE THE FRONT-END DATE DISPLAY AND RESHOW ALL BUTTONS
-    // document.body.innerHTML = ``;
-
-    // intialElements();
 
     document.getElementById(`changeDateButton`).style.display = `initial`;
     document.getElementById(`makeNoteButton`).style.display = `initial`;
