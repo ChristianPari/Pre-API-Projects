@@ -1,7 +1,3 @@
-/*
-    Version 3: Create a more in-depth webpage to display the calendar project
-*/
-
 let dateRightNow = new Date();
 
 let dateInfo = {
