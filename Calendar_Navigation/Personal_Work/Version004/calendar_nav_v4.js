@@ -1,4 +1,4 @@
-// GLOBAL VARIABLES
+// GLOBAL letIABLES
 let dateRightNow = new Date();
 
 let dateInfo = {
@@ -9,7 +9,7 @@ let dateInfo = {
     monthsArr: [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`],
     daysByMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 
-    // VARIABLE FOR STORING THE `DATE AND DATE NOTE` AS KEY/VALUE PAIR
+    // letIABLE FOR STORING THE `DATE AND DATE NOTE` AS KEY/VALUE PAIR
     storedData: {}
 
 };
@@ -45,7 +45,7 @@ function intialElements() {
     // CREATE YEAR AND MONTHS SELECTS
     // CREATE A LOOP TO GET `YEAR` SELECT DATA
     let startYear = 1920,
-        endYear = 2020,
+        endYear = 2030,
         yearsArr = [];
 
     while (startYear <= endYear) {
@@ -83,6 +83,7 @@ function changeDateFunc() {
     document.getElementById(`changeDateButton`).style.display = `none`;
     document.getElementById(`makeNoteButton`).style.display = `none`;
     document.getElementById(`revealNotesButton`).style.display = `none`;
+    document.getElementById(`hideNotesButton`).style.display = `none`;
     document.getElementById(`yearSelect`).style.display = `initial`;
     document.getElementById(`yearSelect`).value = ``;
 
@@ -99,7 +100,7 @@ function makeNoteFunc() {
         dateInfo.storedData[`${currentDate}`] = note;
 
         let dates = Object.keys(dateInfo.storedData);
-        console.log(dates);
+        // console.log(dates);
 
         let idx = dates.indexOf(currentDate);
 
@@ -117,7 +118,7 @@ function makeNoteFunc() {
         dateInfo.storedData[`${currentDate}`] = newNote;
 
         let dates = Object.keys(dateInfo.storedData);
-        console.log(dates);
+        // console.log(dates);
 
         let idx = dates.indexOf(currentDate);
 
