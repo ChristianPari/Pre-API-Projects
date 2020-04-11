@@ -8,12 +8,11 @@ let dateInfo = {
     day: dateRightNow.getDate(),
     monthsArr: [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`],
     daysByMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-    storedDate: []
+
+    // VARIABLE FOR STORING THE `DATE AND DATE NOTE` AS KEY/VALUE PAIR
+    storedData: {}
 
 };
-
-// VARIABLE FOR STORING THE `DATE AND DATE NOTE` AS KEY/VALUE PAIR
-let storedData = {};
 
 // FUNCTION CALL(S)
 intialElements()
@@ -70,7 +69,7 @@ function intialElements() {
 }
 
 /* FUNCTIONS FOR BUTTONS ONCLICK:
-    []CHANGE DATE: WILL USE THE SELECT ELEMENTS; HIDE OTHER BUTTONS UNTIL DATE IS SELECTED
+    [*]CHANGE DATE: WILL USE THE SELECT ELEMENTS; HIDE OTHER BUTTONS UNTIL DATE IS SELECTED
     []MAKE A NOTE: WILL CREATE A POPUP PROMPT FOR THE USER, THE DATE AND NOTE WILL BE SAVED TOGETHER IN THE SECOND DIV
     []REVEAL NOTES: WILL WORK AS A TOGGLE TO SHOW OR HIDE THE NOTES SECTION; MAKE SCROLLABLE IN CSS ONCE DONE
 */
@@ -84,7 +83,13 @@ function changeDateFunc() {
 
 }
 
-function makeNoteFunc() {}
+function makeNoteFunc() {
+
+
+    let note = prompt(`Create a note!`);
+
+
+}
 
 function revealNotesFunc() {}
 
