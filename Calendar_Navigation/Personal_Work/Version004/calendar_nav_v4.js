@@ -12,7 +12,7 @@ let dateInfo = {
 
 };
 
-// being used to store the note data
+// VARIABLE FOR STORING THE `DATE AND DATE NOTE` AS KEY/VALUE PAIR
 let storedData = {};
 
 // FUNCTION CALL(S)
@@ -24,24 +24,25 @@ intialElements()
     [*]2 DIVS TO BODY, 
     [*]BUTTONS: CHANGE DATE, MAKE A NOTE, REVEAL NOTES
     [*]SELECTS: YEAR AND MONTH; THIS DATA WONT NEED CHANGING SO CREATE THEM HERE BUT DISPLAY BE SET TO NONE
-    []BUTTONS TO FIRST DIV
-    []SELECTS BE APPENDED
+    [*]BUTTONS TO FIRST DIV
+    [*]SELECTS BE APPENDED
 */
 
 function intialElements() {
-    // date heading elmement
-    let dateDisplay = createHeading({ id: `dateHead`, text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
-    dateInfo.storedDate.unshift(`${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}<br>`);
 
-    // create divs
+    // CREATE DATE HEADING ELEMENT
+    let dateDisplay = createHeading({ id: `dateHead`, text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
+
+    // CREATE DIVS
     let interactive = createDiv({ id: `interactive` }),
         notesDisplay = createDiv({ id: `notesDisplay` });
 
     let changeDate = createButton({ id: `changeDateButton`, text: `Change Date`, class: `buttons`, onClickFunc: changeDateFunc }),
         makeNote = createButton({ id: `makeNoteButton`, text: `Make A Note`, class: `buttons`, onClickFunc: makeNoteFunc }),
-        revealNotes = createButton({ id: `revealNotes`, text: `Show Notes`, class: `buttons`, onClickFunc: revealNotesFunc });
+        revealNotes = createButton({ id: `revealNotesButton`, text: `Show Notes`, class: `buttons`, onClickFunc: revealNotesFunc });
 
-    // create year and month selects
+    // CREATE YEAR AND MONTHS SELECTS
+    // CREATE A LOOP TO GET `YEAR` SELECT DATA
     let startYear = 1920,
         endYear = 2020,
         yearsArr = [];
@@ -50,7 +51,6 @@ function intialElements() {
         yearsArr.unshift(startYear);
         startYear++;
     }
-    //^ needed to get years for `yearSelect` data
 
     let yearSelect = createSelect({ id: `yearSelect`, class: `calSelects`, defOp: `Select A Year!`, data: yearsArr, onchange: selectYear }),
         monthSelect = createSelect({ id: `monthSelect`, class: `calSelects`, defOp: `Select A Month!`, data: dateInfo.monthsArr, onchange: selectMonth });
@@ -75,22 +75,92 @@ function intialElements() {
     []REVEAL NOTES: WILL WORK AS A TOGGLE TO SHOW OR HIDE THE NOTES SECTION; MAKE SCROLLABLE IN CSS ONCE DONE
 */
 
-function changeDateFunc() {}
+function changeDateFunc() {
+
+    document.getElementById(`changeDateButton`).style.display = `none`;
+    document.getElementById(`makeNoteButton`).style.display = `none`;
+    document.getElementById(`revealNotesButton`).style.display = `none`;
+    document.getElementById(`yearSelect`).style.display = `initial`;
+
+}
 
 function makeNoteFunc() {}
 
 function revealNotesFunc() {}
 
 /* FUNCTIONS FOR SELECTS:
-    MONTH, DAY, YEAR
-        MAKE FUNCTIONS FOR REPEATED CODE
+    [*]CHECK FOR LEAP YEAR
+    [*]MONTH, [*]DAY, [*]YEAR
+        MAKE FUNCTIONS FOR REPEATED CODE (IF ANY)
 */
 
-function selectYear() {}
+function checkLeapYear(year) {
 
-function selectMonth() {}
+    if (year % 4 == 0 || (year % 100 != 0 && year % 400 == 0)) {
 
-function selectDay() {}
+        dateInfo.daysByMonth[1] = 29;
+
+    } else {
+
+        dateInfo.daysByMonth[1] = 28;
+
+    }
+
+}
+
+function selectYear() {
+
+    console.log(this.value);
+    dateInfo.year = this.value;
+
+    checkLeapYear(dateInfo.year);
+
+    this.style.display = `none`;
+    document.getElementById(`monthSelect`).style.display = `initial`;
+
+}
+
+function selectMonth() {
+
+    console.log(this.value);
+    dateInfo.month = dateInfo.monthsArr.indexOf(this.value);
+
+    this.style.display = `none`;
+
+    // CREATE A LOOP TO GET `DAYS` DATA
+    let daysArr = [],
+        startDay = 1,
+        endDay = dateInfo.daysByMonth[dateInfo.month];
+    while (startDay <= endDay) {
+        daysArr.push(startDay);
+        startDay++;
+    }
+
+    // CREATE DAY SELECT ELEMENT
+    let daySelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select A Day!`, data: daysArr, onchange: selectDay });
+
+    document.getElementById(`interactive`).appendChild(daySelect);
+
+}
+
+function selectDay() {
+
+    console.log(this.value);
+    dateInfo.day = this.value;
+
+    this.style.display = `none`;
+
+    // ONCE THE DAY IS SELECTED, UPDATE THE FRONT-END DATE DISPLAY AND RESHOW ALL BUTTONS
+    document.body.innerHTML = ``;
+
+    intialElements();
+
+    let oldDate = document.getElementById(`dateHead`);
+    let parentDiv = oldDate.parentNode;
+    let newDate = createHeading({ id: `dateHead`, text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
+    parentDiv.replaceChild(newDate, oldDate);
+
+}
 
 // FUNCTIONS TO CREATE HTML ELEMENTS
 function createDiv(divObj) {
