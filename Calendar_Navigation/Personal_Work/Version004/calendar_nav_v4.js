@@ -85,8 +85,10 @@ function changeDateFunc() {
 
 function makeNoteFunc() {
 
-
+    let currentDate = document.getElementById(`dateHead`).innerText;
     let note = prompt(`Create a note!`);
+    dateInfo.storedData[`${currentDate}`] = note;
+    console.log(dateInfo.storedData);
 
 
 }
