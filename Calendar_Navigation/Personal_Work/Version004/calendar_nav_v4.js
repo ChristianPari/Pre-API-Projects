@@ -85,15 +85,55 @@ function changeDateFunc() {
 
 function makeNoteFunc() {
 
-    let currentDate = document.getElementById(`dateHead`).innerText;
-    let note = prompt(`Create a note!`);
-    dateInfo.storedData[`${currentDate}`] = note;
-    console.log(dateInfo.storedData);
+    if (document.getElementById(`dateHead`) != null) {
 
+        let currentDate = document.getElementById(`dateHead`).innerText;
+
+        if (dateInfo.storedData[currentDate] == null) {
+            // CREATES THIS IF THE DATE KEY DOESNT EXIST YET
+
+            let note = prompt(`Create a note!`);
+            dateInfo.storedData[`${currentDate}`] = note;
+
+        } else {
+            // CREATES THIS IF THE DATE KEY DOES EXIST
+
+            let note = prompt(`Create a note!`),
+                prevNote = dateInfo.storedData[`${currentDate}`],
+                newNote = `${prevNote}<br>${note}`;
+            dateInfo.storedData[`${currentDate}`] = newNote;
+
+        }
+
+    } else {
+
+        let currentDate = document.getElementById(`dateHead${dateInfo.month + 1}/${dateInfo.day}/${dateInfo.year}`).innerText;
+
+        if (dateInfo.storedData[currentDate] == null) {
+            // CREATES THIS IF THE DATE KEY DOESNT EXIST YET
+
+            let note = prompt(`Create a note!`);
+            dateInfo.storedData[`${currentDate}`] = note;
+
+        } else {
+            // CREATES THIS IF THE DATE KEY DOES EXIST
+
+            let note = prompt(`Create a note!`),
+                prevNote = dateInfo.storedData[`${currentDate}`],
+                newNote = `${prevNote}<br>${note}`;
+            dateInfo.storedData[`${currentDate}`] = newNote;
+
+        }
+
+    }
 
 }
 
-function revealNotesFunc() {}
+function revealNotesFunc() {
+
+
+
+}
 
 /* FUNCTIONS FOR SELECTS:
     [*]CHECK FOR LEAP YEAR
@@ -164,7 +204,7 @@ function selectDay() {
 
     let oldDate = document.getElementById(`dateHead`);
     let parentDiv = oldDate.parentNode;
-    let newDate = createHeading({ id: `dateHead`, text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
+    let newDate = createHeading({ id: `dateHead${dateInfo.month + 1}/${dateInfo.day}/${dateInfo.year}`, text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
     parentDiv.replaceChild(newDate, oldDate);
 
 }
