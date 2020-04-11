@@ -80,50 +80,50 @@ function changeDateFunc() {
     document.getElementById(`makeNoteButton`).style.display = `none`;
     document.getElementById(`revealNotesButton`).style.display = `none`;
     document.getElementById(`yearSelect`).style.display = `initial`;
+    document.getElementById(`yearSelect`).value = ``;
 
 }
 
 function makeNoteFunc() {
 
-    if (document.getElementById(`dateHead`) != null) {
+    let currentDate = document.getElementById(`dateHead`).innerText;
 
-        let currentDate = document.getElementById(`dateHead`).innerText;
+    if (dateInfo.storedData[currentDate] == null) {
+        // CREATES THIS IF THE DATE KEY DOESNT EXIST YET
 
-        if (dateInfo.storedData[currentDate] == null) {
-            // CREATES THIS IF THE DATE KEY DOESNT EXIST YET
+        let note = prompt(`Create a note!`);
+        dateInfo.storedData[`${currentDate}`] = note;
 
-            let note = prompt(`Create a note!`);
-            dateInfo.storedData[`${currentDate}`] = note;
+        let dates = Object.keys(dateInfo.storedData);
+        console.log(dates);
 
-        } else {
-            // CREATES THIS IF THE DATE KEY DOES EXIST
+        let idx = dates.indexOf(currentDate);
 
-            let note = prompt(`Create a note!`),
-                prevNote = dateInfo.storedData[`${currentDate}`],
-                newNote = `${prevNote}<br>${note}`;
-            dateInfo.storedData[`${currentDate}`] = newNote;
+        let noteDiv = createDiv({ id: currentDate, class: `noteDivs` });
+        noteDiv.innerHTML = `${dates[idx]}<br>${dateInfo.storedData[`${currentDate}`]}`;
 
-        }
+    document.getElementById(`notesDisplay`).appendChild(noteDiv);
 
     } else {
+        // CREATES THIS IF THE DATE KEY DOES EXIST
 
-        let currentDate = document.getElementById(`dateHead${dateInfo.month + 1}/${dateInfo.day}/${dateInfo.year}`).innerText;
+        let note = prompt(`Create a note!`),
+            prevNote = dateInfo.storedData[`${currentDate}`],
+            newNote = `${prevNote}<br>${note}`;
+        dateInfo.storedData[`${currentDate}`] = newNote;
 
-        if (dateInfo.storedData[currentDate] == null) {
-            // CREATES THIS IF THE DATE KEY DOESNT EXIST YET
+        let dates = Object.keys(dateInfo.storedData);
+        console.log(dates);
 
-            let note = prompt(`Create a note!`);
-            dateInfo.storedData[`${currentDate}`] = note;
+        let idx = dates.indexOf(currentDate);
 
-        } else {
-            // CREATES THIS IF THE DATE KEY DOES EXIST
+        let div = document.getElementById(`${currentDate}`);
+        div.parentNode.removeChild(div); 
 
-            let note = prompt(`Create a note!`),
-                prevNote = dateInfo.storedData[`${currentDate}`],
-                newNote = `${prevNote}<br>${note}`;
-            dateInfo.storedData[`${currentDate}`] = newNote;
+        let noteDiv = createDiv({ id: currentDate, class: `noteDivs` });
+        noteDiv.innerHTML = `${dates[idx]}<br>${dateInfo.storedData[`${currentDate}`]}`;
 
-        }
+        document.getElementById(`notesDisplay`).appendChild(noteDiv);
 
     }
 
@@ -164,6 +164,7 @@ function selectYear() {
 
     this.style.display = `none`;
     document.getElementById(`monthSelect`).style.display = `initial`;
+    document.getElementById(`monthSelect`).value = ``;
 
 }
 
@@ -198,14 +199,23 @@ function selectDay() {
     this.style.display = `none`;
 
     // ONCE THE DAY IS SELECTED, UPDATE THE FRONT-END DATE DISPLAY AND RESHOW ALL BUTTONS
-    document.body.innerHTML = ``;
+    // document.body.innerHTML = ``;
 
-    intialElements();
+    // intialElements();
 
-    let oldDate = document.getElementById(`dateHead`);
-    let parentDiv = oldDate.parentNode;
-    let newDate = createHeading({ id: `dateHead${dateInfo.month + 1}/${dateInfo.day}/${dateInfo.year}`, text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
+    document.getElementById(`changeDateButton`).style.display = `initial`;
+    document.getElementById(`makeNoteButton`).style.display = `initial`;
+    document.getElementById(`revealNotesButton`).style.display = `initial`;
+
+    if (document.getElementById(`dateHead`) != null) {
+        
+    let oldDate = document.getElementById(`dateHead`),
+        parentDiv = oldDate.parentNode,
+        newDate = createHeading({ text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
     parentDiv.replaceChild(newDate, oldDate);
+    newDate.id = `dateHead`;
+
+    } 
 
 }
 
