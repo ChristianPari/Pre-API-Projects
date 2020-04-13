@@ -1,42 +1,75 @@
 html {
-    background: linear-gradient( to bottom, rgb(0, 233, 233), rgb(25, 73, 20));
-    height: 100%;
+    background-image: url(https://www.travelocity.com/inspire/wp-content/uploads/2017/11/SunsetFeeling-1024x683.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+#mainDiv {
+    margin: auto;
+    width: 400px;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.541);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.692);
+    border-radius: 10px;
 }
 
 #dateHead {
-    font-size: 130px;
+    font-size: 45px;
+    font-family: sans-serif;
     text-align: center;
-    margin: 5%;
+    margin: 2%;
+    color: rgba(0, 0, 0, 0.692);
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.692);
+    border-radius: 10px;
 }
 
 #interactive {
-    margin: 5%;
     display: flex;
     justify-content: space-evenly;
+    margin-top: 3%;
 }
 
 #interactive button {
-    font-size: 25px;
-    color: white;
-    border-style: double;
-    border-width: 10px;
-    background-color: rgb(0, 119, 103);
-    border-color: black;
-    border-radius: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
+    font-size: 15px;
+    font-family: monospace;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.692);
+    border-radius: 5px;
+    border-style: none;
+    background-color: rgba(255, 255, 255, 0.281);
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.575);
+}
+
+#notesMainDiv {
+    margin: 1.5%;
+    height: 200px;
+    border-radius: 10px;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 #notesDisplay {
-    margin: 10%;
     text-align: center;
-    font-size: 35px;
 }
 
 #notesDisplay div {
-    border-style: solid;
-    border-color: black;
-    border-radius: 100px;
-    width: 35%;
-    text-align: center;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    margin-left: 20%;
+    margin-right: 20%;
+    background-color: rgba(255, 255, 255, 0.281);
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.548);
+    border-radius: 10px;
 }
