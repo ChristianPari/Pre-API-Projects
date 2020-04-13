@@ -1,1 +1,3 @@
-This version will consist of a main heading that displays the date, a button below that allows the user to changed the date by select elements if they want, another button that allows the user to make a note for that date and then (maybe either have the note appear below or in like a side column? or maybe there is a button below or next to the previous buttons that allow the user to reveal/show the notes below like a toggle?).
+This is version 4 of my calendar navigation program. I wanted to make the UI feel more like a widget for now until I really get to the point of making an actual calendar. This program allows the user to change dates, make notes for the selected date and if the note section becomes longer than the display box it becomes a scrollable div, and then the user can choose to hide or show the notes section, which has some CSS transitions to make it feel more smooth.
+
+`demo will be added soon`
