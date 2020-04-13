@@ -37,7 +37,6 @@ function intialElements() {
         interactive = createDiv({ id: `interactive` }),
         notesMainDiv = createDiv({ id: `notesMainDiv` }),
         notesDisplay = createDiv({ id: `notesDisplay` });
-    notesDisplay.style.display = `none`;
 
     let changeDate = createButton({ id: `changeDateButton`, text: `Change Date`, class: `buttons`, onClickFunc: changeDateFunc }),
         makeNote = createButton({ id: `makeNoteButton`, text: `Make A Note`, class: `buttons`, onClickFunc: makeNoteFunc }),
@@ -63,6 +62,7 @@ function intialElements() {
     mainDiv.appendChild(interactive);
     mainDiv.appendChild(notesMainDiv);
     notesMainDiv.appendChild(notesDisplay);
+    notesDisplay.style.opacity = `0`;
     interactive.appendChild(changeDate);
     interactive.appendChild(yearSelect);
     yearSelect.style.display = `none`;
@@ -72,6 +72,7 @@ function intialElements() {
     interactive.appendChild(revealNotes);
     interactive.appendChild(hideNotes);
     hideNotes.style.display = `none`;
+    mainDiv.style.height = `100px`;
 
 
 }
@@ -89,7 +90,7 @@ function changeDateFunc() {
     document.getElementById(`revealNotesButton`).style.display = `none`;
     document.getElementById(`hideNotesButton`).style.display = `none`;
     document.getElementById(`yearSelect`).style.display = `initial`;
-    document.getElementById(`yearSelect`).value = ``;
+    document.getElementById(`yearSelect`).value = `${dateInfo.year}`;
 
 }
 
@@ -108,17 +109,20 @@ function makeNoteFunc() {
 
         let idx = dates.indexOf(currentDate);
 
-        let noteDiv = createDiv({ id: currentDate, class: `noteDivs` });
-        noteDiv.innerHTML = `${dates[idx]}<br>${dateInfo.storedData[`${currentDate}`]}`;
+        let noteDiv = createDiv({ id: currentDate, class: `noteDivs` }),
+            noteDate = createHeading({ id: `noteDate`, class: `noteDates`, text: `${dates[idx]}`, size: 3 }),
+            noteText = createParagraph({ text: `- ${dateInfo.storedData[`${currentDate}`]}` });
+        noteDiv.appendChild(noteDate);
+        noteDiv.appendChild(noteText);
 
-    document.getElementById(`notesDisplay`).appendChild(noteDiv);
+        document.getElementById(`notesDisplay`).appendChild(noteDiv);
 
     } else {
         // CREATES THIS IF THE DATE KEY DOES EXIST
 
         let note = prompt(`Create a note!`),
             prevNote = dateInfo.storedData[`${currentDate}`],
-            newNote = `${prevNote}<br>${note}`;
+            newNote = `${prevNote}<br>- ${note}`;
         dateInfo.storedData[`${currentDate}`] = newNote;
 
         let dates = Object.keys(dateInfo.storedData);
@@ -127,10 +131,13 @@ function makeNoteFunc() {
         let idx = dates.indexOf(currentDate);
 
         let div = document.getElementById(`${currentDate}`);
-        div.parentNode.removeChild(div); 
+        div.parentNode.removeChild(div);
 
-        let noteDiv = createDiv({ id: currentDate, class: `noteDivs` });
-        noteDiv.innerHTML = `${dates[idx]}<br>${dateInfo.storedData[`${currentDate}`]}`;
+        let noteDiv = createDiv({ id: currentDate, class: `noteDivs` }),
+            noteDate = createHeading({ id: `noteDate`, class: `noteDates`, text: `${dates[idx]}`, size: 3 }),
+            noteText = createParagraph({text: `- ${dateInfo.storedData[`${currentDate}`]}`});
+        noteDiv.appendChild(noteDate);
+        noteDiv.appendChild(noteText);
 
         document.getElementById(`notesDisplay`).appendChild(noteDiv);
 
@@ -140,17 +147,24 @@ function makeNoteFunc() {
 
 function revealNotesFunc() {
 
-    document.getElementById(`notesDisplay`).style.display = `initial`;
     document.getElementById(`revealNotesButton`).style.display = `none`;
     document.getElementById(`hideNotesButton`).style.display = `initial`;
+    document.getElementById(`mainDiv`).style.height = `300px`;
+    document.getElementById(`mainDiv`).style.transition = `0.5s`;
+    document.getElementById(`notesDisplay`).style.transition = `opacity 0.5s`;
+    document.getElementById(`notesDisplay`).style.opacity = `1`;
+    document.getElementById(`notesDisplay`).style.transitionDelay = `0.25s`;
     
 }
 
 function hideNotesFunc() {
 
-    document.getElementById(`notesDisplay`).style.display = `none`;
     document.getElementById(`revealNotesButton`).style.display = `initial`;
     document.getElementById(`hideNotesButton`).style.display = `none`;
+    document.getElementById(`mainDiv`).style.height = `100px`;
+    document.getElementById(`mainDiv`).style.transition = `0.5s`;
+    document.getElementById(`notesDisplay`).style.transition = `opacity 0.1s`;
+    document.getElementById(`notesDisplay`).style.opacity = `0`;
 
 }
 
@@ -177,12 +191,20 @@ function checkLeapYear(year) {
 function selectYear() {
 
     dateInfo.year = this.value;
+    console.log(dateInfo.year);
 
-    checkLeapYear(dateInfo.year);
 
-    this.style.display = `none`;
-    document.getElementById(`monthSelect`).style.display = `initial`;
-    document.getElementById(`monthSelect`).value = ``;
+    if (dateInfo.year == ``) {
+        return
+    } else {
+        
+        checkLeapYear(dateInfo.year);
+        
+        this.style.display = `none`;
+        document.getElementById(`monthSelect`).style.display = `initial`;
+        document.getElementById(`monthSelect`).value = `${dateInfo.monthsArr[dateInfo.month]}`;
+        
+    }
 
 }
 
@@ -190,43 +212,55 @@ function selectMonth() {
 
     dateInfo.month = dateInfo.monthsArr.indexOf(this.value);
 
-    this.style.display = `none`;
-
-    // CREATE A LOOP TO GET `DAYS` DATA
-    let daysArr = [],
+    if (this.value == ``) {
+        return
+    } else {
+        
+        this.style.display = `none`;
+        
+        // CREATE A LOOP TO GET `DAYS` DATA
+        let daysArr = [],
         startDay = 1,
         endDay = dateInfo.daysByMonth[dateInfo.month];
-    while (startDay <= endDay) {
-        daysArr.push(startDay);
-        startDay++;
+        while (startDay <= endDay) {
+            daysArr.push(startDay);
+            startDay++;
+        }
+        
+        // CREATE DAY SELECT ELEMENT
+        let daySelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select A Day!`, data: daysArr, onchange: selectDay });
+        
+        document.getElementById(`interactive`).appendChild(daySelect);
+        
     }
-
-    // CREATE DAY SELECT ELEMENT
-    let daySelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select A Day!`, data: daysArr, onchange: selectDay });
-
-    document.getElementById(`interactive`).appendChild(daySelect);
-
+        
 }
 
 function selectDay() {
 
     dateInfo.day = this.value;
 
-    this.style.display = `none`;
+    if (this.value == ``) {
+        return
+    } else {
 
-    document.getElementById(`changeDateButton`).style.display = `initial`;
-    document.getElementById(`makeNoteButton`).style.display = `initial`;
-    document.getElementById(`revealNotesButton`).style.display = `initial`;
+        this.style.display = `none`;
 
-    if (document.getElementById(`dateHead`) != null) {
-        
-    let oldDate = document.getElementById(`dateHead`),
-        parentDiv = oldDate.parentNode,
-        newDate = createHeading({ text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
-    parentDiv.replaceChild(newDate, oldDate);
-    newDate.id = `dateHead`;
+        document.getElementById(`changeDateButton`).style.display = `initial`;
+        document.getElementById(`makeNoteButton`).style.display = `initial`;
+        document.getElementById(`revealNotesButton`).style.display = `initial`;
 
-    } 
+        if (document.getElementById(`dateHead`) != null) {
+
+            let oldDate = document.getElementById(`dateHead`),
+                parentDiv = oldDate.parentNode,
+                newDate = createHeading({ text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
+            parentDiv.replaceChild(newDate, oldDate);
+            newDate.id = `dateHead`;
+
+        }
+
+    }   
 
 }
 
@@ -259,10 +293,23 @@ function createHeading(headingObj) {
 
     }
 
+    heading.className = headingObj.class != undefined ? headingObj.class : ``;
+
     return heading
 
 }
 
+function createParagraph(paraObj) {
+
+    // text
+
+    let paragraph = document.createElement(`p`);
+
+    paragraph.innerHTML = paraObj.text != undefined ? paraObj.text : `>> No Text <<`;
+
+    return paragraph
+
+}
 
 function createButton(buttonObj) {
 
