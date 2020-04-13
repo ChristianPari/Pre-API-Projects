@@ -33,7 +33,9 @@ function intialElements() {
     let dateDisplay = createHeading({ id: `dateHead`, text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
 
     // CREATE DIVS
-    let interactive = createDiv({ id: `interactive` }),
+    let mainDiv = createDiv({ id: `mainDiv` }),
+        interactive = createDiv({ id: `interactive` }),
+        notesMainDiv = createDiv({ id: `notesMainDiv` }),
         notesDisplay = createDiv({ id: `notesDisplay` });
     notesDisplay.style.display = `none`;
 
@@ -56,9 +58,11 @@ function intialElements() {
     let yearSelect = createSelect({ id: `yearSelect`, class: `calSelects`, defOp: `Select A Year!`, data: yearsArr, onchange: selectYear }),
         monthSelect = createSelect({ id: `monthSelect`, class: `calSelects`, defOp: `Select A Month!`, data: dateInfo.monthsArr, onchange: selectMonth });
 
-    document.body.appendChild(dateDisplay);
-    document.body.appendChild(interactive);
-    document.body.appendChild(notesDisplay);
+    document.body.appendChild(mainDiv);
+    mainDiv.appendChild(dateDisplay);
+    mainDiv.appendChild(interactive);
+    mainDiv.appendChild(notesMainDiv);
+    notesMainDiv.appendChild(notesDisplay);
     interactive.appendChild(changeDate);
     interactive.appendChild(yearSelect);
     yearSelect.style.display = `none`;
