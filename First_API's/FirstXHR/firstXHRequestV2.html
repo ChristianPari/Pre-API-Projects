@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning XHR v2</title>
+</head>
+
+<body>
+
+    <script>
+        let xhr = new XMLHttpRequest();
+        // `new` creates a new instance of the XMLH.. object
+        // without the `new` vsCode will assume that XMLH... is a function call
+
+        let reqMethod = `GET`, // REQUEST METHOD
+            endpoint = `https://api.github.com/users`, // ENDPOINT
+            async = true; // ASYNCHRO.
+
+        xhr.open(reqMethod, endpoint, async); // initailize the api request
+
+        xhr.onload = () => { // handle the api response
+
+            let rawResponse = xhr.responseText,
+                parsedResponse = JSON.parse(rawResponse);
+
+            console.log(parsedResponse[0]); // to know what key/value pair im wokring with
+
+            for (let a = 0; a < parsedResponse.length; a++) {
+
+                let user = parsedResponse[a]; // an object with a users properties
+
+                // front end work
+                displayUser(user);
+
+            }
+
+        }
+
+        xhr.send(); // if we need to; this will pass information with the request, in the form of a JSON object
+
+        function displayUser(userObj) {
+
+            // create elements
+            let heading = document.createElement(`h3`),
+                userImg = document.createElement(`img`),
+                gitHubLink = document.createElement(`a`),
+                moreInfoBtn = document.createElement(`button`),
+                breakVar = document.createElement(`br`);
+
+            // assign elements their data
+            heading.innerText = userObj.login;
+            heading.style.textTransform = `uppercase`;
+            userImg.src = userObj.avatar_url;
+            userImg.style.width = `100px`;
+            userImg.style.height = `100px`;
+            gitHubLink.innerText = `${userObj.login.toUpperCase()}'s GitHub`;
+            gitHubLink.href = userObj.html_url;
+            gitHubLink.style.textDecoration = `none`;
+            moreInfoBtn.innerText = `More Info on ${userObj.login.toUpperCase()}`;
+            moreInfoBtn.onclick = () => moreInfo(userObj.login);
+
+            // append elements to respective parent nodes
+            document.body.appendChild(heading);
+            document.body.appendChild(userImg);
+            document.body.appendChild(breakVar);
+            document.body.appendChild(gitHubLink);
+            document.body.appendChild(moreInfoBtn);
+
+        }
+
+        function moreInfo(username) {
+
+            console.log(username);
+
+            let xhr = new XMLHttpRequest();
+
+            xhr.open(`GET`, `${endpoint}/${username}`, true);
+
+            xhr.onload = () => {
+
+                let rawUserData = xhr.responseText,
+                    parsedUserData = JSON.parse(rawUserData);
+
+                console.log(parsedUserData);
+
+            };
+
+            xhr.send();
+
+        }
+    </script>
+
+</body>
+
+</html>
