@@ -9,7 +9,7 @@ let dateInfo = {
     monthsArr: [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`],
     daysByMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 
-    // letIABLE FOR STORING THE `DATE AND DATE NOTE` AS KEY/VALUE PAIR
+    // VARIABLE FOR STORING THE `DATE AND DATE NOTE` AS KEY/VALUE PAIR
     storedData: {}
 
 };
