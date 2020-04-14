@@ -71,6 +71,7 @@ function intialElements() {
     notesMainDiv.appendChild(notesDisplay);
     interactive.appendChild(changeDate);
     interactive.appendChild(yearSelect);
+    interactive.appendChild(monthSelect);
     interactive.appendChild(prevMonth);
     interactive.appendChild(nextMonth);
     interactive.appendChild(prevDay);
@@ -78,7 +79,6 @@ function intialElements() {
     interactive.appendChild(prevYear);
     interactive.appendChild(nextYear);
     interactive.appendChild(cancel);
-    interactive.appendChild(monthSelect);
     interactive.appendChild(makeNote);
     interactive.appendChild(revealNotes);
     interactive.appendChild(hideNotes);
@@ -340,6 +340,8 @@ function cancelMethod() {
     document.getElementById(`prevYear`).style.display = `none`;
     document.getElementById(`cancelButton`).style.display = `none`;
     document.getElementById(`yearSelect`).style.display = `none`;
+    document.getElementById(`monthSelect`).style.display = `none`;
+    document.getElementById(`daySelect`).style.display = `none`;
     document.getElementById(`changeDateButton`).style.display = `initial`;
     document.getElementById(`makeNoteButton`).style.display = `initial`;
 
@@ -500,9 +502,16 @@ function selectMonth() {
         }
         
         // CREATE DAY SELECT ELEMENT
-        let daySelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select Day`, data: daysArr, onchange: selectDay });
+        if (document.getElementById(`daySelect`) != null) {
+            let oldSelect = document.getElementById(`daySelect`),
+                parentDiv = oldSelect.parentNode,
+                newSelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select Day`, data: daysArr, onchange: selectDay });
+            parentDiv.replaceChild(newSelect, oldSelect);
+            newSelect.id = `daySelect`;
+        }
         
         document.getElementById(`interactive`).appendChild(daySelect);
+        document.getElementById(`interactive`).insertBefore(daySelect, document.getElementById(`prevMonth`));
         
     }
         
