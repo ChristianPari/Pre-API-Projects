@@ -90,7 +90,7 @@ function changeDateFunc() {
     document.getElementById(`revealNotesButton`).style.display = `none`;
     document.getElementById(`hideNotesButton`).style.display = `none`;
     document.getElementById(`yearSelect`).style.display = `initial`;
-    document.getElementById(`yearSelect`).value = `${dateInfo.year}`;
+    document.getElementById(`yearSelect`).value = ``;
 
 }
 
@@ -191,8 +191,6 @@ function checkLeapYear(year) {
 function selectYear() {
 
     dateInfo.year = this.value;
-    console.log(dateInfo.year);
-
 
     if (dateInfo.year == ``) {
         return
@@ -202,7 +200,7 @@ function selectYear() {
         
         this.style.display = `none`;
         document.getElementById(`monthSelect`).style.display = `initial`;
-        document.getElementById(`monthSelect`).value = `${dateInfo.monthsArr[dateInfo.month]}`;
+        document.getElementById(`monthSelect`).value = ``;
         
     }
 
