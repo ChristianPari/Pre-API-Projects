@@ -54,25 +54,46 @@ function intialElements() {
         startYear++;
     }
 
-    let yearSelect = createSelect({ id: `yearSelect`, class: `calSelects`, defOp: `Select A Year!`, data: yearsArr, onchange: selectYear }),
-        monthSelect = createSelect({ id: `monthSelect`, class: `calSelects`, defOp: `Select A Month!`, data: dateInfo.monthsArr, onchange: selectMonth });
+    let nextDay = createButton({ id: 'nextDay', class: 'dateBtns', text: 'Day >', onClickFunc: modifyDate }),
+        prevDay = createButton({ id: 'prevDay', class: 'dateBtns', text: '< Day', onClickFunc: modifyDate }),
+        nextMonth = createButton({ id: 'nextMonth', class: 'dateBtns', text: 'Month >', onClickFunc: modifyDate }),
+        prevMonth = createButton({ id: 'prevMonth', class: 'dateBtns', text: '< Month', onClickFunc: modifyDate }),
+        nextYear = createButton({ id: 'nextYear', class: 'dateBtns', text: 'Year >', onClickFunc: modifyDate }),
+        prevYear = createButton({ id: 'prevYear', class: 'dateBtns', text: '< Year', onClickFunc: modifyDate }),
+        cancel = createButton({ id: `cancelButton`, text: `X`, onClickFunc: cancelMethod }),
+        yearSelect = createSelect({ id: `yearSelect`, class: `calSelects`, defOp: `Select Year`, data: yearsArr, onchange: selectYear }),
+        monthSelect = createSelect({ id: `monthSelect`, class: `calSelects`, defOp: `Select Month`, data: dateInfo.monthsArr, onchange: selectMonth });
 
     document.body.appendChild(mainDiv);
     mainDiv.appendChild(dateDisplay);
     mainDiv.appendChild(interactive);
     mainDiv.appendChild(notesMainDiv);
     notesMainDiv.appendChild(notesDisplay);
-    notesDisplay.style.opacity = `0`;
     interactive.appendChild(changeDate);
     interactive.appendChild(yearSelect);
-    yearSelect.style.display = `none`;
+    interactive.appendChild(prevMonth);
+    interactive.appendChild(nextMonth);
+    interactive.appendChild(prevDay);
+    interactive.appendChild(nextDay);
+    interactive.appendChild(prevYear);
+    interactive.appendChild(nextYear);
+    interactive.appendChild(cancel);
     interactive.appendChild(monthSelect);
-    monthSelect.style.display = `none`;
     interactive.appendChild(makeNote);
     interactive.appendChild(revealNotes);
     interactive.appendChild(hideNotes);
+    mainDiv.style.height = `110px`;
+    nextMonth.style.display = `none`;
+    prevMonth.style.display = `none`;
+    nextDay.style.display = `none`;
+    prevDay.style.display = `none`;
+    nextYear.style.display = `none`;
+    prevYear.style.display = `none`;
+    cancel.style.display = `none`;
+    yearSelect.style.display = `none`;
+    monthSelect.style.display = `none`;
     hideNotes.style.display = `none`;
-    mainDiv.style.height = `100px`;
+
 
 
 }
@@ -89,8 +110,248 @@ function changeDateFunc() {
     document.getElementById(`makeNoteButton`).style.display = `none`;
     document.getElementById(`revealNotesButton`).style.display = `none`;
     document.getElementById(`hideNotesButton`).style.display = `none`;
+    document.getElementById(`nextMonth`).style.display = `initial`;
+    document.getElementById(`prevMonth`).style.display = `initial`;
+    document.getElementById(`nextDay`).style.display = `initial`;
+    document.getElementById(`prevDay`).style.display = `initial`;
+    document.getElementById(`nextYear`).style.display = `initial`;
+    document.getElementById(`prevYear`).style.display = `initial`;
+    document.getElementById(`cancelButton`).style.display = `initial`;
     document.getElementById(`yearSelect`).style.display = `initial`;
-    document.getElementById(`yearSelect`).value = `${dateInfo.year}`;
+    document.getElementById(`yearSelect`).value = ``;
+
+}
+
+function modifyDate() {
+
+    let id = this.id,
+        curDay = dateInfo.day,
+        curMonth = dateInfo.month,
+        curYear = dateInfo.year;
+
+    checkLeapYear(curYear);
+
+    // preform a change on dateInfo based on the button pressed
+    // creating functions for each specific case
+    switch (id) {
+        case `nextDay`:
+
+            nextDay(curDay, curMonth);
+
+            break;
+
+        case `prevDay`:
+            prevDay(curDay, curMonth);
+
+            break;
+
+        case `nextMonth`:
+
+            nextMonth(curMonth);
+
+            break;
+
+        case `prevMonth`:
+
+            prevMonth(curMonth);
+
+            break;
+
+        case `nextYear`:
+
+            nextYear(curYear);
+            // added the function call below to make Febuarys day length change accordingly
+            checkLeapYear(curYear + 1);
+
+            break;
+
+        case `prevYear`:
+
+            prevYear(curYear);
+            // added the function call below to make Febuarys day length change accordingly
+            checkLeapYear(curYear - 1);
+
+            break;
+
+    }
+
+    // checking for impossible dates
+    if (dateInfo.day > dateInfo.daysByMonth[dateInfo.month]) {
+
+        dateInfo.day = dateInfo.daysByMonth[dateInfo.month];
+
+    }
+
+    if (dateInfo.year <= 1) {
+
+        dateInfo.year = 1;
+
+    }
+
+    // UPDATE THE FRONT-END
+    let oldDate = document.getElementById(`dateHead`),
+        parentDiv = oldDate.parentNode,
+        newDate = createHeading({ text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
+    parentDiv.replaceChild(newDate, oldDate);
+    newDate.id = `dateHead`;
+
+
+}
+
+// SWITCH FUNCTIONS
+function nextDay(curDay, curMonth) {
+    // check for:
+    //? what month are we in? 
+    //? what is the last day of the month? 
+    //? are we on the last day of the month? if so, continue on to the next month
+    //? is it december? b/c then we have to continue into the next year
+    //? if not on last day then continue increasing through the month
+
+    // need to minus 1 to account for the index of the months not starting at 1 but instead starting at 0; Jan = 0 not 1
+    if (curDay < dateInfo.daysByMonth[curMonth]) {
+
+        dateInfo.day++
+
+    } else if (curDay == dateInfo.daysByMonth[curMonth] && curMonth != 11) { // at end of the month, but not the end of the year)
+
+        dateInfo.day = 1;
+        dateInfo.month++;
+
+    } else if (curDay == dateInfo.daysByMonth[curMonth] && curMonth == 11) { // at end of the month of december/ end of year
+
+        dateInfo.day = 1;
+        dateInfo.month = 1;
+        dateInfo.year++;
+
+    } else {
+
+        console.log(`Something went wrong, check code`);
+
+    }
+
+}
+
+function prevDay(curDay, curMonth) {
+    // check for:
+    //? what month are we in?
+    //? are we on the first day of the month? if so, continue on to the next month
+    //? is it january? b/c then we have to continue into the previous year
+    //? if not on last day then continue decreasing through the month
+
+    if (curDay > 1) {
+
+        dateInfo.day--;
+
+    } else if (curDay == 1 && curMonth != 0) { // at beginning of the month, but not the end of the year)
+
+        dateInfo.day = dateInfo.daysByMonth[curMonth - 1];
+        dateInfo.month--;
+
+    } else if (curDay == 1 && curMonth == 0) { // at beginning of the month of december/ end of year
+
+        dateInfo.day = 31;
+        dateInfo.month = 12;
+        dateInfo.year--;
+
+    } else {
+
+        console.log(`Something went wrong, check code`);
+
+    }
+
+}
+
+function nextMonth(curMonth) {
+    // check for:
+    //? is it deecember?
+    //? otherwise just continue through
+
+    if (curMonth < 11) {
+
+        dateInfo.month++;
+
+    } else if (curMonth == 11) {
+
+        dateInfo.month = 1;
+        dateInfo.year++;
+
+    } else {
+
+        console.log(`Something went wrong, check code`);
+
+    }
+
+}
+
+function prevMonth(curMonth) {
+    // check for:
+    //? is it january?
+    //? otherwise just continue through
+    //? dont want to cause `fake dates` like Feb 31st
+
+    if (curMonth > 0) {
+
+        dateInfo.month--;
+
+    } else if (curMonth == 0) {
+
+        dateInfo.month = 12;
+        dateInfo.year--;
+
+    } else {
+
+        console.log(`Something went wrong, check code`);
+
+    }
+
+}
+
+function nextYear(curYear) {
+
+    if (curYear > 0) {
+
+        dateInfo.year++;
+
+    }
+
+}
+
+function prevYear(curYear) {
+    // check for:
+    //? is it year 1?
+
+    if (curYear == 1) {
+        dateInfo.year = 1;
+    } else {
+
+        dateInfo.year--;
+
+    }
+
+}
+
+function cancelMethod() {
+
+    document.getElementById(`nextMonth`).style.display = `none`;
+    document.getElementById(`prevMonth`).style.display = `none`;
+    document.getElementById(`nextDay`).style.display = `none`;
+    document.getElementById(`prevDay`).style.display = `none`;
+    document.getElementById(`nextYear`).style.display = `none`;
+    document.getElementById(`prevYear`).style.display = `none`;
+    document.getElementById(`cancelButton`).style.display = `none`;
+    document.getElementById(`yearSelect`).style.display = `none`;
+    document.getElementById(`changeDateButton`).style.display = `initial`;
+    document.getElementById(`makeNoteButton`).style.display = `initial`;
+
+    if (document.getElementById(`mainDiv`).style.height == `400px`) {
+
+        document.getElementById(`hideNotesButton`).style.display = `initial`;
+
+    } else {
+
+        document.getElementById(`revealNotesButton`).style.display = `initial`;
+
+    }
 
 }
 
@@ -106,7 +367,6 @@ function makeNoteFunc() {
         dateInfo.storedData[`${currentDate}`].push(note);
 
         let dates = Object.keys(dateInfo.storedData);
-        // console.log(dates);
 
         let idx = dates.indexOf(currentDate);
 
@@ -115,7 +375,6 @@ function makeNoteFunc() {
             noteText = createParagraph({ text: `* ${dateInfo.storedData[`${currentDate}`][0]}` });
         noteDiv.appendChild(noteDate);
         noteDiv.appendChild(noteText);
-        console.log(dateInfo.storedData);
 
         document.getElementById(`notesDisplay`).appendChild(noteDiv);
 
@@ -126,7 +385,6 @@ function makeNoteFunc() {
         dateInfo.storedData[`${currentDate}`].push(note);
 
         let dates = Object.keys(dateInfo.storedData);
-        // console.log(dates);
 
         let idx = dates.indexOf(currentDate);
 
@@ -154,7 +412,6 @@ function makeNoteFunc() {
         let noteInfo = createParagraph({text: noteText});
         noteDiv.appendChild(noteDate);
         noteDiv.appendChild(noteInfo);
-        console.log(dateInfo.storedData);
 
         document.getElementById(`notesDisplay`).appendChild(noteDiv);
 
@@ -166,7 +423,7 @@ function revealNotesFunc() {
 
     document.getElementById(`revealNotesButton`).style.display = `none`;
     document.getElementById(`hideNotesButton`).style.display = `initial`;
-    document.getElementById(`mainDiv`).style.height = `300px`;
+    document.getElementById(`mainDiv`).style.height = `400px`;
     document.getElementById(`mainDiv`).style.transition = `0.5s`;
     document.getElementById(`notesDisplay`).style.transition = `opacity 0.5s`;
     document.getElementById(`notesDisplay`).style.opacity = `1`;
@@ -178,7 +435,7 @@ function hideNotesFunc() {
 
     document.getElementById(`revealNotesButton`).style.display = `initial`;
     document.getElementById(`hideNotesButton`).style.display = `none`;
-    document.getElementById(`mainDiv`).style.height = `100px`;
+    document.getElementById(`mainDiv`).style.height = `110px`;
     document.getElementById(`mainDiv`).style.transition = `0.5s`;
     document.getElementById(`notesDisplay`).style.transition = `opacity 0.1s`;
     document.getElementById(`notesDisplay`).style.opacity = `0`;
@@ -208,8 +465,6 @@ function checkLeapYear(year) {
 function selectYear() {
 
     dateInfo.year = this.value;
-    console.log(dateInfo.year);
-
 
     if (dateInfo.year == ``) {
         return
@@ -219,7 +474,7 @@ function selectYear() {
         
         this.style.display = `none`;
         document.getElementById(`monthSelect`).style.display = `initial`;
-        document.getElementById(`monthSelect`).value = `${dateInfo.monthsArr[dateInfo.month]}`;
+        document.getElementById(`monthSelect`).value = ``;
         
     }
 
@@ -245,7 +500,7 @@ function selectMonth() {
         }
         
         // CREATE DAY SELECT ELEMENT
-        let daySelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select A Day!`, data: daysArr, onchange: selectDay });
+        let daySelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select Day`, data: daysArr, onchange: selectDay });
         
         document.getElementById(`interactive`).appendChild(daySelect);
         
@@ -263,6 +518,13 @@ function selectDay() {
 
         this.style.display = `none`;
 
+        document.getElementById(`nextMonth`).style.display = `none`;
+        document.getElementById(`prevMonth`).style.display = `none`;
+        document.getElementById(`nextDay`).style.display = `none`;
+        document.getElementById(`prevDay`).style.display = `none`;
+        document.getElementById(`nextYear`).style.display = `none`;
+        document.getElementById(`prevYear`).style.display = `none`;
+        document.getElementById(`cancelButton`).style.display = `none`;
         document.getElementById(`changeDateButton`).style.display = `initial`;
         document.getElementById(`makeNoteButton`).style.display = `initial`;
         document.getElementById(`revealNotesButton`).style.display = `initial`;
