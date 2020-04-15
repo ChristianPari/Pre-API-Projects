@@ -93,19 +93,26 @@ function displayInfo() {
 
         let rawResponse = xhr.responseText,
             parsedResponse = JSON.parse(rawResponse),
-            followersHead = createHeading({ size: 5, text: `Followers: ${parsedResponse.followers}`, id: `${username}Followers` });
+            followersHead = createHeading({ size: 5, text: `Followers: ${parsedResponse.followers}`, id: `${username}Followers` }),
+            followingHead = createHeading({ size: 5, text: `Following: ${parsedResponse.following}`, id: `${username}Following` }),
+            githubRepos = createHeading({ size: 5, text: `GitHub Repos: ${parsedResponse.public_repos}`, id: `${username}Repos` });
 
         console.log(parsedResponse);
 
         parent.appendChild(followersHead);
+        parent.appendChild(followingHead);
+        parent.appendChild(githubRepos);
+        parent.insertBefore(followersHead, document.getElementById(`${username}`));
+        parent.insertBefore(followingHead, document.getElementById(`${username}`));
+        parent.insertBefore(githubRepos, document.getElementById(`${username}`));
 
     }
 
     xhr.send();
 
     // once clicked make the more info button disappear and the hide info button appear
-    document.getElementById(`${username}`).style.display = `initial`;
     document.getElementById(`${username}MoreInfo`).style.display = `none`;
+    document.getElementById(`${username}`).style.display = `initial`;
 
 
 }
@@ -118,6 +125,8 @@ function lessInfo() {
     document.getElementById(`${this.id}`).style.display = `none`;
     document.getElementById(`${this.id}MoreInfo`).style.display = `initial`;
     document.getElementById(`${this.id}Followers`).remove();
+    document.getElementById(`${this.id}Following`).remove();
+    document.getElementById(`${this.id}Repos`).remove();
 
 }
 
