@@ -332,6 +332,18 @@ function prevYear(curYear) {
 
 function cancelMethod() {
 
+    document.getElementById(`changeDateButton`).style.display = `initial`;
+    document.getElementById(`makeNoteButton`).style.display = `initial`;
+    if (document.getElementById(`mainDiv`).style.height == `400px`) {
+
+        document.getElementById(`hideNotesButton`).style.display = `initial`;
+
+    } else {
+
+        document.getElementById(`revealNotesButton`).style.display = `initial`;
+        document.getElementById(`notesDisplay`).style.opacity = `0`;
+
+    }
     document.getElementById(`nextMonth`).style.display = `none`;
     document.getElementById(`prevMonth`).style.display = `none`;
     document.getElementById(`nextDay`).style.display = `none`;
@@ -342,18 +354,7 @@ function cancelMethod() {
     document.getElementById(`yearSelect`).style.display = `none`;
     document.getElementById(`monthSelect`).style.display = `none`;
     document.getElementById(`daySelect`).style.display = `none`;
-    document.getElementById(`changeDateButton`).style.display = `initial`;
-    document.getElementById(`makeNoteButton`).style.display = `initial`;
 
-    if (document.getElementById(`mainDiv`).style.height == `400px`) {
-
-        document.getElementById(`hideNotesButton`).style.display = `initial`;
-
-    } else {
-
-        document.getElementById(`revealNotesButton`).style.display = `initial`;
-
-    }
 
 }
 
