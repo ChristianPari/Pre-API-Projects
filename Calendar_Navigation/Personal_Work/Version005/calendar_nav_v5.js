@@ -189,13 +189,16 @@ function modifyDate() {
     }
 
     // UPDATE THE FRONT-END
+    updateFront();
+
+}
+
+function updateFront() {
     let oldDate = document.getElementById(`dateHead`),
         parentDiv = oldDate.parentNode,
         newDate = createHeading({ text: `${dateInfo.monthsArr[dateInfo.month]} ${dateInfo.day}, ${dateInfo.year}`, size: 1 });
     parentDiv.replaceChild(newDate, oldDate);
     newDate.id = `dateHead`;
-
-
 }
 
 // SWITCH FUNCTIONS
@@ -481,6 +484,8 @@ function selectYear() {
         
     }
 
+    updateFront();
+
 }
 
 function selectMonth() {
@@ -503,18 +508,26 @@ function selectMonth() {
         }
         
         // CREATE DAY SELECT ELEMENT
+        let daySelect = ``;
+
         if (document.getElementById(`daySelect`) != null) {
             let oldSelect = document.getElementById(`daySelect`),
-                parentDiv = oldSelect.parentNode,
-                newSelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select Day`, data: daysArr, onchange: selectDay });
-            parentDiv.replaceChild(newSelect, oldSelect);
-            newSelect.id = `daySelect`;
+                parentDiv = oldSelect.parentNode;
+                daySelect = createSelect({ class: `calSelects`, defOp: `Select Day`, data: daysArr, onchange: selectDay });
+            parentDiv.replaceChild(daySelect, oldSelect);
+            daySelect.id = `daySelect`;
+        } else {
+
+           daySelect = createSelect({ id: `daySelect`, class: `calSelects`, defOp: `Select Day`, data: daysArr, onchange: selectDay });
+
         }
         
         document.getElementById(`interactive`).appendChild(daySelect);
         document.getElementById(`interactive`).insertBefore(daySelect, document.getElementById(`prevMonth`));
         
     }
+
+    updateFront();
         
 }
 
@@ -550,6 +563,8 @@ function selectDay() {
         }
 
     }   
+
+    updateFront();
 
 }
 
