@@ -10,3 +10,5 @@ Each DIV has the user's:
     - following
     - number of GitHub Repos they have
 - followed by a second BUTTON that appears after the first is clicked that will hide the information and then the 'show' BUTTON will be displayed again for reuse
+
+![XHR v3](https://user-images.githubusercontent.com/62902638/79371098-d278c580-7f21-11ea-9a27-df564c73b3c1.gif)
