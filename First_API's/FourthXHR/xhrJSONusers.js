@@ -2,11 +2,16 @@ window.onload = () => {
 
     requestAllUsers();
     let header = createHeading({ id: `mainHead`, text: `Company Resource Site`, size: 1 }),
-        mainDiv = createDiv({ id: `mainDiv` });
+        mainDiv = createDiv({ id: `mainDiv` }),
+        companysDiv = createDiv({ id: `companysDiv` }),
+        sidebar = createDiv({ id: `sidebar` });
     document.body.appendChild(header);
     document.body.appendChild(mainDiv);
+    mainDiv.appendChild(companysDiv);
+    mainDiv.appendChild(sidebar);
 
     // maybe implement a sidebar that holds 'interested in' companies after a button is clicked on the user div
+    createSidebar();
 
 }
 
@@ -29,7 +34,7 @@ function requestAllUsers() {
         let rawRes = xhr.responseText,
             parsedRes = JSON.parse(rawRes);
 
-        console.log(parsedRes[0]); // to see what key/value pairs im working with
+        console.log(parsedRes); // to see what key/value pairs im working with
 
         for (let a = 0; a < parsedRes.length; a++) {
 
@@ -55,14 +60,83 @@ function displayUser(user) {
     // link to website
 
     let div = createDiv({ class: `userDivs` }),
-        compName = createHeading({ text: user.company.name, size: 2, class: `companyNames` }),
-        ownName = createHeading({ text: user.name, size: 3, class: `owner` }),
-        contact = createButton({ text: `Contact Us`, class: `contact` }),
+        compName = createHeading({ text: user.company.name.toUpperCase(), size: 2, class: `companyNames` }),
+        slogan = createHeading({ text: `'${user.company.bs}'`, class: `slogans` }),
+        ownName = createHeading({ text: `<small><small>CEO </small></small>${user.name}`, size: 3, class: `owner` }),
+        contact = createButton({ text: `Contact Us`, class: `contact`, onClickFunc: getUser, id: `${user.id}` }),
         location = `${user.address.geo.lat},${user.address.geo.lng}`,
         directions = createHREF({ display: `Get Directions`, ref: `https://www.google.com/maps/place/${location}`, newTab: true, class: `directions` }),
         website = createHREF({ display: `Check Out Our Website`, ref: `${user.website}`, newTab: true, class: `websites` });
 
     // append children to parent nodes
+    document.getElementById(`companysDiv`).appendChild(div);
+    div.appendChild(compName);
+    div.appendChild(slogan);
+    div.appendChild(ownName);
+    div.appendChild(directions);
+    div.appendChild(website);
+    div.appendChild(contact);
+
+}
+
+function getUser() {
+
+    // get the ID from the user
+    // create new XHR where the endpoint is the URL to that specific users data
+    // open channel function
+    // onload function
+    // get raw
+    // parse raw
+    // set parsed to user data var
+    // call contact us display function
+    // send function
+
+    console.log(this.id); // see what ID is being passed
+    let userID = this.id;
+
+    let xhr = new XMLHttpRequest(),
+        reqMeth = 'GET',
+        ep = `https://jsonplaceholder.typicode.com/users/${userID}`,
+        async = true;
+
+    xhr.open(reqMeth, ep, async); // initialize api request/open channel
+
+    xhr.onload = () => {
+
+        let rawRes = xhr.responseText,
+            parsedRes = JSON.parse(rawRes);
+
+        console.log(parsedRes); // shows what user's data we're working with
+
+        let userData = parsedRes;
+
+        contactDisplay(userData);
+
+    };
+
+    xhr.send();
+
+}
+
+function contactDisplay(user) {
+
+    // phone number var
+    // email var
+    // address var
+
+    let phone = user.phone,
+        email = user.email,
+        userAdd = user.address,
+        address = `${userAdd.street} ${userAdd.suite}, ${userAdd.city} ${userAdd.zipcode}`;
+
+    alert(`Phone: ${phone}\nEmail: ${email}\nMailing Address: ${address}`);
+
+}
+
+function createSidebar() {
+
+    let heading = createHeading({ id: `sidebarHead`, text: `INTERESTS` });
+    document.getElementById(`sidebar`).appendChild(heading);
 
 }
 
@@ -73,7 +147,7 @@ function createDiv(divObj) {
 
     let div = document.createElement(`div`);
 
-    div.id = divObj.id != undefined && document.getElementById(divObj.id) == null ? divObj.id : `>> No ID <<`;
+    div.id = divObj.id != undefined && document.getElementById(divObj.id) == null ? divObj.id : ``;
 
     div.className = divObj.class != undefined ? divObj.class : ``;
 
@@ -89,7 +163,7 @@ function createHeading(headingObj) {
 
     heading.innerHTML = typeof headingObj.text == `string` ? headingObj.text : `>> No text <<`;
 
-    heading.id = headingObj.id != undefined && document.getElementById(headingObj.id) == null ? headingObj.id : `>> No ID <<`;
+    heading.id = headingObj.id != undefined && document.getElementById(headingObj.id) == null ? headingObj.id : ``;
 
     heading.className = headingObj.class != undefined ? headingObj.class : ``;
 
@@ -119,7 +193,7 @@ function createImage(imageObj) {
 
     image.alt = imageObj.alt != undefined ? imageObj.alt : `image couldn't load; broke`;
 
-    image.id = imageObj.id != undefined && document.getElementById(imageObj.id) == null ? imageObj.id : `>> No ID <<`;
+    image.id = imageObj.id != undefined && document.getElementById(imageObj.id) == null ? imageObj.id : ``;
 
     image.className = imageObj.class != undefined ? imageObj.class : ``;
 
@@ -133,7 +207,7 @@ function createButton(buttonObj) {
 
     let button = document.createElement(`button`);
 
-    button.id = buttonObj.id != undefined && document.getElementById(buttonObj.id) == null ? buttonObj.id : `>> No ID <<`;
+    button.id = buttonObj.id != undefined && document.getElementById(buttonObj.id) == null ? buttonObj.id : ``;
 
     button.className = buttonObj.class != undefined ? buttonObj.class : ``;
 
@@ -151,7 +225,7 @@ function createHREF(hrefObj) {
 
     let href = document.createElement(`a`);
 
-    href.id = hrefObj.id != undefined && document.getElementById(hrefObj.id) == null ? hrefObj.id : `>> No ID <<`;
+    href.id = hrefObj.id != undefined && document.getElementById(hrefObj.id) == null ? hrefObj.id : ``;
 
     href.target = hrefObj.newTab === true ? href.target = `_blank` : ``;
 
