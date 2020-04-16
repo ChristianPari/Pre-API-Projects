@@ -63,10 +63,12 @@ function displayUser(user) {
         compName = createHeading({ text: user.company.name.toUpperCase(), size: 2, class: `companyNames` }),
         slogan = createHeading({ text: `'${user.company.bs}'`, class: `slogans` }),
         ownName = createHeading({ text: `<small><small>CEO </small></small>${user.name}`, size: 3, class: `owner` }),
-        contact = createButton({ text: `Contact Us`, class: `contact`, onClickFunc: getUser, id: `${user.id}` }),
+        contact = createButton({ text: `Contact Us`, class: `contact`, onClickFunc: getUser, id: `${user.id}Contact` }),
         location = `${user.address.geo.lat},${user.address.geo.lng}`,
         directions = createHREF({ display: `Get Directions`, ref: `https://www.google.com/maps/place/${location}`, newTab: true, class: `directions` }),
-        website = createHREF({ display: `Check Out Our Website`, ref: `${user.website}`, newTab: true, class: `websites` });
+        website = createHREF({ display: `Check Out Our Website`, ref: `http://www.${user.website}`, newTab: true, class: `websites` }),
+        interested = createButton({ text: `Add to interested`, class: `interestButtons`, onClickFunc: getUser, id: `${user.id}Interested` }),
+        notInterested = createButton({ text: `Remove from interested`, class: `interestButtons`, onClickFunc: getUser, id: `${user.id}NotInterested` });
 
     // append children to parent nodes
     document.getElementById(`companysDiv`).appendChild(div);
@@ -75,7 +77,11 @@ function displayUser(user) {
     div.appendChild(ownName);
     div.appendChild(directions);
     div.appendChild(website);
+    div.appendChild(interested);
+    div.appendChild(notInterested);
     div.appendChild(contact);
+
+    notInterested.style.display = `none`;
 
 }
 
@@ -92,7 +98,8 @@ function getUser() {
     // send function
 
     console.log(this.id); // see what ID is being passed
-    let userID = this.id;
+    let userID = this.id.replace(/([A-z])\w+/, ``);
+    console.log(userID);
 
     let xhr = new XMLHttpRequest(),
         reqMeth = 'GET',
@@ -110,11 +117,57 @@ function getUser() {
 
         let userData = parsedRes;
 
-        contactDisplay(userData);
+        switch (this.id) {
+            case `${userID}Contact`:
+
+                contactDisplay(userData);
+
+                break;
+            case `${userID}Interested`:
+
+                interestedFunc(userData);
+
+                break;
+            case `${userID}NotInterested`:
+
+                notInterestedFunc(userData);
+
+                break;
+
+        }
 
     };
 
     xhr.send();
+
+}
+
+function interestedFunc(user) {
+
+    // create heading for company name
+    // append heading to sidebar
+    // interested button hide
+    // not interested button appear
+
+    console.log(user);
+
+    let heading = createHeading({ id: `${user.name}Sidebar`, class: `sidebarNames`, text: `${user.company.name.toUpperCase()}`, size: 3 });
+    document.getElementById(`sidebar`).appendChild(heading);
+    document.getElementById(`${user.id}Interested`).style.display = `none`;
+    document.getElementById(`${user.id}NotInterested`).style.display = `initial`;
+
+}
+
+function notInterestedFunc(user) {
+
+    // remove heading from sidebar
+    // not interested button hide
+    // interested button appear
+
+    console.log(user);
+    document.getElementById(`${user.id}NotInterested`).style.display = `none`;
+    document.getElementById(`${user.id}Interested`).style.display = `initial`;
+    document.getElementById(`${user.name}Sidebar`).remove();
 
 }
 
