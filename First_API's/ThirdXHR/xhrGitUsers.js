@@ -1,3 +1,10 @@
+// when the window loads it runs this function
+window.onload = () => {
+
+    requestAllUsers();
+
+}
+
 function requestAllUsers() {
 
     let xhr = new XMLHttpRequest();
@@ -29,13 +36,6 @@ function requestAllUsers() {
     }
 
     xhr.send(); // if we need to; this will pass information with the request, in the form of a JSON object
-
-}
-
-// when the window loads it runs this function
-window.onload = () => {
-
-    requestAllUsers();
 
 }
 
