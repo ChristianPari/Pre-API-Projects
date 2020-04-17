@@ -29,6 +29,5 @@ Added some INLINE CSS within the SCRIPT tag to display the data more nicely.
 
 Located at the bottom of my code are pre-made functions for creating HTML ELEMENTS where I pass an OBJECT as a PARAMTER with info like ID, CLASS, TEXT, ect. that are used to make my HTML ELEMENTS.
 
-<div id="demo">
+<div id="demo"></div>
 ![XHR v1](https://user-images.githubusercontent.com/62902638/79371050-bb39d800-7f21-11ea-81ba-6bf3d254dc61.gif)
-</div>
