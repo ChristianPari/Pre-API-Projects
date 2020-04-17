@@ -74,9 +74,9 @@
                     }),
                     website = createHREF({
                         id: `${userData.name}Website`,
-                        display: `Check out our Webiste: ${userData.website}`,
+                        display: `Check out our Webiste`,
                         newTab: true,
-                        ref: userData.website
+                        ref: `http://${userData.website}`
                     });
 
                 document.getElementById(`users`).appendChild(div);
