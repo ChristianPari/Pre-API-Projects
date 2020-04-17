@@ -1,6 +1,5 @@
 window.onload = () => {
 
-    requestAllUsers();
     let header = createHeading({ id: `mainHead`, text: `Company Resource Site`, size: 1 }),
         mainDiv = createDiv({ id: `mainDiv` }),
         companysDiv = createDiv({ id: `companysDiv` }),
@@ -12,6 +11,8 @@ window.onload = () => {
 
     // maybe implement a sidebar that holds 'interested in' companies after a button is clicked on the user div
     createSidebar();
+
+    requestAllUsers();
 
 }
 
