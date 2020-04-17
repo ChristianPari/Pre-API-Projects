@@ -1,6 +1,11 @@
 This is my very first attempt with using APIs, this code was a walkthrough to learn the basics of using XMLHttpRequest (XHR).
 
-This program was created entirely inside of an HTML file using SCRIPT tags to write JS. First I was informed to create a new INSTANCE of an XHR, this was done by assigning a VARIABLE to'new XMLHttpRequest();'. Then I created the first METHOD with that VARIABLE; .open() where I learned a basic understanding of each manadatory PARAMETER that this METHOD takes.
+Click <a href="#demo">Here</a> to view demo
+
+API used:
+* https://api.github.com/users
+
+This program was created entirely inside of an HTML file using SCRIPT tags to write JS. First I was informed to create a new INSTANCE of an XHR, this was done by assigning a VARIABLE to 'new XMLHttpRequest();'. Then I created the first METHOD with that VARIABLE; .open() where I learned a basic understanding of each manadatory PARAMETER that this METHOD takes.
 * REQUEST METHOD:
     - 'GET' (this is the only one I worked with so far): retrieves data from the specified resource
 * ENDPOINT (API URL):
@@ -22,4 +27,8 @@ Using a FOR LOOP within this ONLOAD METHOD we are able to pass through as a PARA
 Finsihed by APPENDING these to their PARENT NODES; DIV to BODY, rest of ELEMENTS to DIV.
 Added some INLINE CSS within the SCRIPT tag to display the data more nicely.
 
+Located at the bottom of my code are pre-made functions for creating HTML ELEMENTS where I pass an OBJECT as a PARAMTER with info like ID, CLASS, TEXT, ect. that are used to make my HTML ELEMENTS.
+
+<div id="demo">
 ![XHR v1](https://user-images.githubusercontent.com/62902638/79371050-bb39d800-7f21-11ea-81ba-6bf3d254dc61.gif)
+</div>
