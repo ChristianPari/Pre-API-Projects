@@ -1,7 +1,7 @@
 This is my very first attempt with using APIs, this code was a walkthrough to learn the basics of using XMLHttpRequest (XHR).
 
-Click <a href="#demo">Here</a> to view demo
-
+<a href="#demo">Click here to view demo</a>
+<div id='beg'></div>
 API used:
 * https://api.github.com/users
 
@@ -29,5 +29,7 @@ Added some INLINE CSS within the SCRIPT tag to display the data more nicely.
 
 Located at the bottom of my code are pre-made functions for creating HTML ELEMENTS where I pass an OBJECT as a PARAMTER with info like ID, CLASS, TEXT, ect. that are used to make my HTML ELEMENTS.
 
-<div id="demo"></div>
+<a href="#beg">Back to top</a>
+<div id="demo">
 https://user-images.githubusercontent.com/62902638/79371050-bb39d800-7f21-11ea-81ba-6bf3d254dc61.gif
+</div>
