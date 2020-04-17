@@ -1,7 +1,8 @@
+<div id='beg'></div>
 This is my very first attempt with using APIs, this code was a walkthrough to learn the basics of using XMLHttpRequest (XHR).
 
 <a href="#demo">Click here to view demo</a>
-<div id='beg'></div>
+
 API used:
 * https://api.github.com/users
 

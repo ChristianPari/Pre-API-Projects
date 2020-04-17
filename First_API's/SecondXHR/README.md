@@ -1,7 +1,8 @@
+<div id='beg'></div>
 This being my second go with using an API I was instructed to use a different one then the first.
 
 <a href="#demo">Click here to view demo</a>
-<div id='beg'></div>
+
 API used:
 * https://jsonplaceholder.typicode.com/users
 

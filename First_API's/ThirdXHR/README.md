@@ -1,7 +1,8 @@
+<div id='beg'></div>
 This is my third go around with using APIs and I am using the GitHub user API once again. Instead of doing all my code within a HTML file I swithced to just creating a base HTML file with my SCRIPT SRC info and my CSS LINK.
 
 <a href="#demo">Click here to view demo</a>
-<div id='beg'></div>
+
 API used:
 * https://api.github.com/users
 
