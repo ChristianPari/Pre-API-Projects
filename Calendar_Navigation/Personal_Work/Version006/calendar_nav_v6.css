@@ -1,0 +1,16 @@
+#navDiv {
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#calBody {
+    background-color: lightcoral;
+}
+
+#weekdaysDiv {
+    text-align: center;
+    background-color: lightgreen;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+}
