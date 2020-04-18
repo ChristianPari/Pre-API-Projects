@@ -1,8 +1,8 @@
-This is my first attempt at making a functioning date selector via button manipulation by the user. All the HTML ELEMENTS are created within JS.
+This is my first attempt at making a functioning date selector via BUTTON manipulation by the user. All the HTML ELEMENTS are created within JS.
 
 <a href="#demo">Click here to view demo</a>
 
-First step was to create the gloabl variables that I'd be using for this program, which became my first time using the DATE OBJECT which proved to be an amazing feature. Create dthe new instance of the DATE OBJECT, then within my calnedar OBJECT I created variables for the current day, month (which I realized later that the month is displayed via 0-11 so I added 1 to this var to give me the correct current month) and year.
+First step was to create the GLOBAL VARIABLES that I'd be using for this program, which became my first time using the DATE OBJECT which proved to be an amazing feature. Created the new instance of the DATE OBJECT, then within my calnedar OBJECT I created VARIABLES for the current day, month (which I realized later that the month is displayed via 0-11 so I added 1 to this var to give me the correct current month) and year.
 
 First function was created to display the neccessary ELEMENTS to the DOM; date HEADING and manipulating BUTTON. Then had to created the ONCLICK function, which since I made all the BUTTONs run off the same ONCLICK function then I created seperate functions for each BUTTON but within this main function I used a SWITCH that depending on the CASE it would run the function that corresponded to each BUTTON. Within this function I implemented a few IF STATEMENTs that will modify the date info within my GLOBAL calendar OBJECT if a 'false date' is created; for example, if the user tries to go to Feb 29 and it isnt a leap year then the days will only go up to 28. Then follows code to update the FRONT END just before the function ends.
 
