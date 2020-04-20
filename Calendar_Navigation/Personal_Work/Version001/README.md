@@ -13,5 +13,5 @@ The MONTH functions had less coding and logic; just had to ensure that if was De
 The YEAR functions were the simpliest; these just included logic ensuring that the years couldn't go negative and otherwise just increase.
 
 <div id="demo">
-![CalendarV1](https://user-images.githubusercontent.com/62902638/78824152-e36a8980-79ab-11ea-94c6-132f7a0b9816.gif)
+https://user-images.githubusercontent.com/62902638/78824152-e36a8980-79ab-11ea-94c6-132f7a0b9816.gif
 </div>
