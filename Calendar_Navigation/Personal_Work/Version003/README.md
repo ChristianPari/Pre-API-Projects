@@ -15,5 +15,5 @@ Next function is to show the SELECTS which starts with YEAR, this function also 
 The last function is where the most of coding takes place. This is where the OPTIONS that were selected modify the data within my GLOBAL OBJECT, used within the SELECT OPTIONS functions so that they are filled with the correct data. But also to then create the date heading at the end of the program. I used IF ELSE STATEMENTS to distinguish between which SELECT ELEMENT was the one being changed which would then set that ELEMENT to a display of 'none' and the following SELECT to a display of 'initial'. Then lastly on the day SELECT, once that option is made the date HEADING reappears with the selected date being displayed. The date is created via a function that extracts the data inside the array that I created and push each option and converts it into a string.
 
 <div id="demo">
-![Calendar Nav v3](https://user-images.githubusercontent.com/62902638/79369410-e7a02500-7f1e-11ea-9670-f55048e4fddb.gif)
+https://user-images.githubusercontent.com/62902638/79369410-e7a02500-7f1e-11ea-9670-f55048e4fddb.gif
 </div>
